@@ -2,11 +2,11 @@ import Container from "../common/Container";
 
 const Footer = () => {
   return (
-    <footer className="mt-40 border-t py-20">
+    <footer className="mt-40 border-t py-16">
       <Container>
-        <h2 className="text-center text-text-light">
+        <p className="text-center text-text-light">
           © 2026 Flyon Travel Agency
-        </h2>
+        </p>
       </Container>
     </footer>
   );
