@@ -1,83 +1,126 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Menu, X } from "lucide-react";
+
 import Container from "../common/Container";
 import Button from "../common/Button";
+import NavCard from "./navCard";
 import { navigation } from "../../data/navigation";
 
 const Navbar = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
 
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const [menuOpen, setMenuOpen] = useState(false);
-
   useEffect(() => {
-    gsap.from(navbarRef.current, {
-      y: -80,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out",
-    });
+    gsap.fromTo(
+      navbarRef.current,
+      {
+        y: -100,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out",
+      }
+    );
   }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 25);
     };
 
     window.addEventListener("scroll", handleScroll);
 
-    return () =>
-      window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <header className="fixed top-6 left-0 z-50 w-full">
+    <header className="fixed left-0 top-6 z-50 w-full">
       <Container>
-        <div
+        <motion.div
           ref={navbarRef}
+          animate={{
+            height: menuOpen ? "auto" : 80,
+          }}
+          transition={{
+            duration: 0.6,
+            ease: [0.22, 1, 0.36, 1],
+          }}
           className={`
-          rounded-2xl
-          transition-all
-          duration-500
-          ${
-            scrolled
-              ? "border border-white/30 bg-white/60 shadow-2xl backdrop-blur-xl"
-              : "bg-transparent"
-          }
+            relative
+            overflow-hidden
+            rounded-[32px]
+            ${
+              scrolled || menuOpen
+                ? "border border-white/20 bg-white/60 backdrop-blur-3xl shadow-[0_25px_80px_rgba(0,0,0,.12)]"
+                : "bg-transparent"
+            }
           `}
         >
-          <div className="flex h-20 items-center justify-between px-8">
+          {/* Glass Border */}
+
+          <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-white/20" />
+
+          {/* Top Bar */}
+
+          <div className="relative flex h-20 items-center justify-between px-8">
+
             {/* Logo */}
 
-            <div>
+            <div className="cursor-pointer transition duration-300 hover:scale-105">
               <h1 className="font-heading text-3xl font-bold text-primary">
                 Flyon
               </h1>
 
-              <p className="-mt-1 text-xs tracking-[3px] text-text-light uppercase">
-                Travel Agency
+              <p className="text-xs uppercase tracking-[5px] text-text-light">
+                Luxury Travel
               </p>
             </div>
 
-            {/* Desktop */}
+            {/* Right Side */}
 
-            <div className="hidden items-center gap-10 lg:flex">
-              {navigation.map((item) => (
-                <button
-                  key={item.title}
-                  className="relative text-sm font-medium transition hover:text-primary"
-                >
-                  {item.title}
+            <div className="hidden items-center gap-4 lg:flex">
 
-                  <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-primary transition-all duration-300 group-hover:w-full" />
-                </button>
-              ))}
-            </div>
+              <Button className="group flex items-center">
 
-            <div className="hidden lg:block">
-              <Button>Plan Your Journey</Button>
+                Plan Journey
+
+                <ArrowRight
+                  size={18}
+                  className="ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                />
+
+              </Button>
+
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="group flex items-center gap-3 rounded-full border border-white/20 bg-white/20 px-6 py-3 backdrop-blur-xl transition-all duration-300 hover:bg-white/40"
+              >
+                <span className="font-medium">
+
+                  {menuOpen ? "Close" : "Menu"}
+
+                </span>
+
+                {menuOpen ? (
+                  <X
+                    size={18}
+                    className="transition duration-300 group-hover:rotate-90"
+                  />
+                ) : (
+                  <Menu
+                    size={18}
+                    className="transition duration-300 group-hover:rotate-12"
+                  />
+                )}
+              </button>
+
             </div>
 
             {/* Mobile */}
@@ -86,41 +129,72 @@ const Navbar = () => {
               className="lg:hidden"
               onClick={() => setMenuOpen(!menuOpen)}
             >
-              {menuOpen ? (
-                <X size={28} />
-              ) : (
-                <Menu size={28} />
-              )}
+              {menuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
+
           </div>
 
-          {/* Mobile Placeholder */}
+          {/* Expandable Menu */}
 
-          {menuOpen && (
-            <div className="border-t border-slate-200 p-6 lg:hidden">
-              {navigation.map((item) => (
-                <div
-                  key={item.title}
-                  className="mb-6"
+          <AnimatePresence>
+
+            {menuOpen && (
+
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  height: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                  height: "auto",
+                }}
+                exit={{
+                  opacity: 0,
+                  height: 0,
+                }}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="overflow-hidden"
+              >
+                {/* Divider */}
+
+                <div className="mx-8 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
+
+                {/* Cards */}
+
+                <motion.div
+                  variants={{
+                    show: {
+                      transition: {
+                        staggerChildren: 0.12,
+                      },
+                    },
+                  }}
+                  initial="hidden"
+                  animate="show"
+                  className="grid gap-6 p-8 md:grid-cols-3"
                 >
-                  <h3 className="mb-3 font-semibold text-primary">
-                    {item.title}
-                  </h3>
-
-                  {item.links.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      className="mb-2 block text-text-light transition hover:text-primary"
-                    >
-                      {link.label}
-                    </a>
+                  {navigation.map((item) => (
+                    <NavCard
+                      key={item.title}
+                      title={item.title}
+                      color={item.color}
+                      textColor={item.textColor}
+                      links={item.links}
+                    />
                   ))}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+                </motion.div>
+
+              </motion.div>
+
+            )}
+
+          </AnimatePresence>
+
+        </motion.div>
       </Container>
     </header>
   );

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="502" height="276" viewBox="0 0 502 276" fill="none">
+
+    <!-- ================================================================ -->
+    <!-- DEFINITIONS                                                      -->
+    <!-- ================================================================ -->
+
+    <defs>
+
+        <!-- Body -->
+        <linearGradient id="bodyGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="42%" stop-color="#FBFFFF"/>
+            <stop offset="68%" stop-color="#EDF8FA"/>
+            <stop offset="100%" stop-color="#C7E8ED"/>
+        </linearGradient>
+
+        <linearGradient id="bellyGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#58B7CC"/>
+            <stop offset="35%" stop-color="#0E7B9A"/>
+            <stop offset="100%" stop-color="#003C56"/>
+        </linearGradient>
+
+        <!-- Tail -->
+        <linearGradient id="tailGradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0A7998"/>
+            <stop offset="55%" stop-color="#015A73"/>
+            <stop offset="100%" stop-color="#00384F"/>
+        </linearGradient>
+
+        <linearGradient id="goldStripe" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFE56A"/>
+            <stop offset="45%" stop-color="#F4CF45"/>
+            <stop offset="100%" stop-color="#C99B1C"/>
+        </linearGradient>
+
+        <!-- Wing -->
+        <linearGradient id="wingTop" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#CBE8EE"/>
+        </linearGradient>
+
+        <linearGradient id="wingBottom" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#006F8E"/>
+            <stop offset="100%" stop-color="#003D57"/>
+        </linearGradient>
+
+        <!-- Engine -->
+        <linearGradient id="engineBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0B7A96"/>
+            <stop offset="35%" stop-color="#005C79"/>
+            <stop offset="100%" stop-color="#00384F"/>
+        </linearGradient>
+
+        <linearGradient id="engineFront" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#F8FFFF"/>
+            <stop offset="100%" stop-color="#8DC9D7"/>
+        </linearGradient>
+
+        <radialGradient id="fanGradient">
+            <stop offset="0%" stop-color="#031A25"/>
+            <stop offset="100%" stop-color="#0D617B"/>
+        </radialGradient>
+
+        <!-- Shadow -->
+        <filter id="shadow" x="-30%" y="-30%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="10"/>
+        </filter>
+
+    </defs>
+
+    <!-- ================================================================ -->
+    <!-- GROUND SHADOW                                                    -->
+    <!-- ================================================================ -->
+
+    <ellipse cx="245" cy="216" rx="160" ry="16" fill="#003846" opacity="0.22" filter="url(#shadow)"/>
+
+    <!-- ================================================================ -->
+    <!-- FUSELAGE                                                         -->
+    <!-- ================================================================ -->
+
+    <g id="fuselage">
+
+        <!-- Main body -->
+        <path d="M68 170
+                 C95 145 170 122 258 110
+                 C330 100 395 96 435 98
+                 C458 99 474 104 486 112
+                 C493 118 495 123 494 128
+                 C493 132 488 137 482 142
+                 C470 151 452 160 430 165
+                 C388 174 325 182 258 188
+                 C170 194 100 188 68 170Z"
+              fill="url(#bodyGradient)"/>
+
+        <!-- Belly -->
+        <path d="M68 170
+                 C105 185 175 189 255 186
+                 C325 182 395 174 432 165
+                 C455 160 475 149 490 136
+                 C487 148 472 164 452 176
+                 C415 194 330 206 255 210
+                 C170 213 102 205 66 184
+                 C58 179 58 174 68 170Z"
+              fill="url(#bellyGradient)"/>
+
+        <!-- Nose cap -->
+        <path d="M462 112
+                 C475 112 486 116 492 123
+                 C486 130 475 135 461 133Z"
+              fill="#FFFFFF"/>
+
+        <!-- Top highlight -->
+        <path d="M120 150
+                 C205 134 320 121 430 114
+                 L436 118
+                 C330 128 210 141 122 156Z"
+              fill="#FFFFFF" opacity="0.65"/>
+
+        <!-- Lower edge shadow line -->
+        <path d="M115 186
+                 C170 194 270 193 395 171"
+              fill="none"
+              stroke="#002F48"
+              stroke-width="2"
+              opacity="0.20"
+              stroke-linecap="round"/>
+
+        <!-- Body reflection -->
+        <path d="M155 147
+                 C205 138 280 130 375 122"
+              fill="none"
+              stroke="#FFFFFF"
+              stroke-width="4"
+              opacity="0.28"
+              stroke-linecap="round"/>
+
+        <!-- Lower reflection -->
+        <path d="M125 183
+                 C185 190 275 187 385 170"
+              fill="none"
+              stroke="#8ED8E6"
+              stroke-width="3"
+              opacity="0.25"
+              stroke-linecap="round"/>
+
+        <!-- Nose highlight -->
+        <path d="M455 118
+                 C470 120 480 123 487 128"
+              fill="none"
+              stroke="#FFFFFF"
+              stroke-width="2"
+              opacity="0.55"
+              stroke-linecap="round"/>
+
+    </g>
+
+    <!-- ================================================================ -->
+    <!-- TAIL                                                             -->
+    <!-- ================================================================ -->
+
+    <g id="tail">
+
+        <!-- Vertical fin -->
+        <path d="M54 170
+                 C60 138 72 104 86 84
+                 C96 70 108 68 124 72
+                 C135 104 143 132 150 160
+                 C133 166 115 171 92 173
+                 C76 174 63 173 54 170Z"
+              fill="url(#tailGradient)"/>
+
+        <!-- Gold stripe -->
+        <path d="M64 120
+                 C80 112 98 108 116 108
+                 L136 150
+                 C116 150 92 145 70 138Z"
+              fill="url(#goldStripe)"/>
+
+    </g>
+
+    <!-- ================================================================ -->
+    <!-- HORIZONTAL STABILIZER                                            -->
+    <!-- ================================================================ -->
+
+    <g id="horizontal-stabilizer">
+
+        <!-- Top surface -->
+        <path d="M36 177
+                 L96 166
+                 L122 170
+                 L58 184Z"
+              fill="#EDF9FB"/>
+
+        <!-- Mid body -->
+        <path d="M30 183
+                 L90 172
+                 L118 177
+                 L55 193Z"
+              fill="#005B75"/>
+
+        <!-- Bottom shadow -->
+        <path d="M38 186
+                 L93 176
+                 L116 180
+                 L58 194Z"
+              fill="#003C56" opacity="0.55"/>
+
+    </g>
+
+    <!-- ================================================================ -->
+    <!-- MAIN WING                                                        -->
+    <!-- ================================================================ -->
+
+    <g id="main-wing">
+
+        <!-- Top surface -->
+        <path d="M138 166
+                 C170 157 208 150 250 149
+                 C278 149 304 152 330 159
+                 L285 170
+                 C240 178 190 180 140 173Z"
+              fill="url(#wingTop)"/>
+
+        <!-- Bottom surface -->
+        <path d="M132 172
+                 C176 180 232 183 290 176
+                 C315 173 336 170 352 175
+                 L343 196
+                 C300 208 235 212 168 205
+                 C148 202 132 195 118 186Z"
+              fill="url(#wingBottom)"/>
+
+        <!-- Leading edge highlight -->
+        <path d="M140 165
+                 C178 155 236 150 320 158"
+              fill="none"
+              stroke="#FFFFFF"
+              stroke-width="2"
+              opacity="0.65"
+              stroke-linecap="round"/>
+
+        <!-- Wing surface highlight -->
+        <path d="M168 166
+                 C205 163 246 162 288 165"
+              fill="none"
+              stroke="#E8FFFF"
+              stroke-width="3"
+              opacity="0.35"
+              stroke-linecap="round"/>
+
+        <!-- Wing shadow on belly -->
+        <path d="M150 177
+                 C190 186 246 186 318 175
+                 C300 184 245 193 180 191
+                 C165 190 155 186 150 177Z"
+              fill="#002F48" opacity="0.22"/>
+
+    </g>
+
+    <!-- ================================================================ -->
+    <!-- ENGINE                                                           -->
+    <!-- ================================================================ -->
+
+    <g id="engine">
+
+        <!-- Pylon -->
+        <path d="M282 168
+                 C290 160 300 158 312 162
+                 L316 172
+                 C306 170 296 172 286 178Z"
+              fill="#00566E"/>
+
+        <!-- Main body -->
+        <path d="M285 176
+                 C298 166 324 164 348 170
+                 C364 175 372 184 371 194
+                 C370 205 360 214 344 218
+                 C322 223 300 219 288 208
+                 C281 201 278 191 285 176Z"
+              fill="url(#engineBody)"/>
+
+        <!-- Intake cowling -->
+        <ellipse cx="335" cy="188" rx="17" ry="20" fill="url(#engineFront)"/>
+
+        <!-- Fan -->
+        <circle cx="335" cy="188" r="11" fill="url(#fanGradient)"/>
+
+        <!-- Spinner -->
+        <circle cx="335" cy="188" r="3" fill="#BDECF2"/>
+
+        <!-- Intake highlight -->
+        <path d="M321 180
+                 C327 176 340 176 347 182"
+              fill="none"
+              stroke="#FFFFFF"
+              stroke-width="2"
+              opacity="0.65"
+              stroke-linecap="round"/>
+
+        <!-- Bottom reflection -->
+        <path d="M296 203
+                 C314 208 337 208 356 202"
+              fill="none"
+              stroke="#66C8DB"
+              stroke-width="2"
+              opacity="0.35"
+              stroke-linecap="round"/>
+
+        <!-- Ground shadow -->
+        <ellipse cx="323" cy="206" rx="36" ry="7" fill="#002E46" opacity="0.18"/>
+
+    </g>
+
+    <!-- ================================================================ -->
+    <!-- PASSENGER WINDOWS                                                -->
+    <!-- ================================================================ -->
+
+    <g id="windows" fill="#005F78">
+        <circle cx="170" cy="155" r="4.3"/>
+        <circle cx="188" cy="152" r="4.3"/>
+        <circle cx="206" cy="149" r="4.3"/>
+        <circle cx="224" cy="146" r="4.3"/>
+        <circle cx="242" cy="143" r="4.3"/>
+        <circle cx="260" cy="140" r="4.3"/>
+        <circle cx="278" cy="137" r="4.3"/>
+        <circle cx="296" cy="134" r="4.3"/>
+        <circle cx="314" cy="131" r="4.3"/>
+        <circle cx="332" cy="128" r="4.3"/>
+    </g>
+
+    <!-- ================================================================ -->
+    <!-- COCKPIT WINDOWS                                                  -->
+    <!-- ================================================================ -->
+
+    <g id="cockpit">
+
+        <!-- Left window -->
+        <path d="M394 111
+                 L409 109
+                 L416 117
+                 L401 119Z"
+              fill="#045E79"/>
+
+        <!-- Right window -->
+        <path d="M414 108
+                 L432 106
+                 L440 113
+                 L423 116Z"
+              fill="#045E79"/>
+
+        <!-- Left window shine -->
+        <path d="M401 112
+                 L409 111"
+              fill="none"
+              stroke="#9CEBFF"
+              stroke-width="1"
+              opacity="0.7"/>
+
+        <!-- Right window shine -->
+        <path d="M421 109
+                 L430 108"
+              fill="none"
+              stroke="#9CEBFF"
+              stroke-width="1"
+              opacity="0.7"/>
+
+    </g>
+
+</svg>
