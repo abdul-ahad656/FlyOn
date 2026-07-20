@@ -6,6 +6,8 @@ import FloatingParticles from "./FloatingParticles";
 import ScrollIndicator from "./ScrollIndicator";
 import FlightPath from "./FlightPath";
 
+import CursorGlow from "../animations/CursorGlow";
+
 import Container from "../common/Container";
 
 const Hero = () => {
@@ -17,36 +19,28 @@ const Hero = () => {
       {/* Background */}
       <HeroBackground />
 
-      {/* Floating Elements */}
+      {/* Mouse Glow */}
+      <CursorGlow />
+
+      {/* Floating Decorations */}
       <FloatingClouds />
       <FloatingParticles />
 
       <Container className="relative z-20">
         <div className="grid items-center gap-16 lg:grid-cols-2">
-
-          {/* LEFT */}
+          {/* Left */}
           <HeroContent />
 
-          {/* RIGHT */}
+          {/* Right */}
           <div className="relative hidden h-[700px] items-center justify-center lg:flex">
-
-            {/* Flight Route */}
-
             <FlightPath />
 
-            {/* Plane */}
-
             <FloatingPlane />
-
           </div>
-
         </div>
       </Container>
 
-      {/* Scroll Indicator */}
-
       <ScrollIndicator />
-
     </section>
   );
 };
