@@ -1,42 +1,66 @@
 import HeroBackground from "./HeroBackground";
+import HeroScene from "./HeroScene";
 import HeroContent from "./HeroContent";
-import FloatingPlane from "./FloatingPlane";
-import FloatingClouds from "./FloatingClouds";
-import FloatingParticles from "./FloatingParticles";
 import ScrollIndicator from "./ScrollIndicator";
-import FlightPath from "./FlightPath";
-
-import CursorGlow from "../animations/CursorGlow";
 
 import Container from "../common/Container";
 
+import useHeroScene from "../../hooks/useHeroScene";
+import useHeroTimeline from "../../hooks/useHeroTimeline";
+import useHeroRefs from "../../hooks/useHeroRefs";
+
 const Hero = () => {
+  const refs = useHeroRefs();
+
+  // Continuous physics engine
+  useHeroScene({
+    planeRef: refs.planeRef,
+    shadowRef: refs.shadowRef,
+    glowRef: refs.glowRef,
+    trailRef: refs.trailRef,
+    cloudRefs: refs.cloudRefs,
+  });
+
+  // Intro cinematic timeline
+  useHeroTimeline({
+    badgeRef: refs.badgeRef,
+    headingRef: refs.headingRef,
+    descriptionRef: refs.descriptionRef,
+    buttonsRef: refs.buttonsRef,
+    statsRef: refs.statsRef,
+
+    planeRef: refs.planeRef,
+    glowRef: refs.glowRef,
+    trailRef: refs.trailRef,
+    cloudRefs: refs.cloudRefs,
+  });
+
   return (
     <section
       id="home"
       className="relative flex min-h-screen items-center overflow-hidden pt-32"
     >
-      {/* Background */}
       <HeroBackground />
 
-      {/* Mouse Glow */}
-      <CursorGlow />
+      <HeroScene
+        planeRef={refs.planeRef}
+        shadowRef={refs.shadowRef}
+        glowRef={refs.glowRef}
+        trailRef={refs.trailRef}
+        cloudRefs={refs.cloudRefs}
+      />
 
-      {/* Floating Decorations */}
-      <FloatingClouds />
-      <FloatingParticles />
-
-      <Container className="relative z-20">
+      <Container className="relative z-30">
         <div className="grid items-center gap-16 lg:grid-cols-2">
-          {/* Left */}
-          <HeroContent />
+          <HeroContent
+            badgeRef={refs.badgeRef}
+            headingRef={refs.headingRef}
+            descriptionRef={refs.descriptionRef}
+            buttonsRef={refs.buttonsRef}
+            statsRef={refs.statsRef}
+          />
 
-          {/* Right */}
-          <div className="relative hidden h-[700px] items-center justify-center lg:flex">
-            <FlightPath />
-
-            <FloatingPlane />
-          </div>
+          <div />
         </div>
       </Container>
 

@@ -1,61 +1,36 @@
-import { motion } from "framer-motion";
+import HeroBadge from "./content/HeroBadge";
+import HeroHeading from "./content/HeroHeading";
+import HeroDescription from "./content/HeroDescription";
+import HeroButtons from "./content/HeroButtons";
+import HeroStats from "./content/HeroStats";
 
-import HeroButtons from "./HeroButtons";
-import HeroStats from "./HeroStats";
-import TrustBadge from "./TrustBadge";
+interface Props {
+  badgeRef: React.RefObject<HTMLDivElement | null>;
+  headingRef: React.RefObject<HTMLHeadingElement | null>;
+  descriptionRef: React.RefObject<HTMLParagraphElement | null>;
+  buttonsRef: React.RefObject<HTMLDivElement | null>;
+  statsRef: React.RefObject<HTMLDivElement | null>;
+}
 
-const HeroContent = () => {
+const HeroContent = ({
+  badgeRef,
+  headingRef,
+  descriptionRef,
+  buttonsRef,
+  statsRef,
+}: Props) => {
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        y: 40,
-      }}
-      animate={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 1,
-      }}
-      className="relative z-20 max-w-2xl"
-    >
-      <TrustBadge />
+    <div className="relative z-30 max-w-2xl">
+      <HeroBadge ref={badgeRef} />
 
-      <h1
-        className="
-        mt-8
-        font-heading
-        text-6xl
-        font-bold
-        leading-tight
-        text-secondary
-        xl:text-7xl
-      "
-      >
-        Fly Beyond{" "}
-        <span className="text-primary">
-          Ordinary.
-        </span>
-      </h1>
+      <HeroHeading ref={headingRef} />
 
-      <p
-        className="
-        mt-8
-        max-w-xl
-        text-lg
-        leading-8
-        text-text-light
-      "
-      >
-        Discover handcrafted luxury journeys, unforgettable destinations,
-        and premium travel experiences tailored for modern explorers.
-      </p>
+      <HeroDescription ref={descriptionRef} />
 
-      <HeroButtons />
+      <HeroButtons ref={buttonsRef} />
 
-      <HeroStats />
-    </motion.div>
+      <HeroStats ref={statsRef} />
+    </div>
   );
 };
 
