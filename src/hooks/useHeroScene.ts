@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import gsap from "gsap";
 
 import { HERO_SCENE } from "../scene/config";
+import { getPlaneState } from "../scene/physics";
 import type { HeroSceneRefs } from "../scene/types";
 
 const useHeroScene = ({
@@ -12,6 +13,10 @@ const useHeroScene = ({
   cloudRefs,
 }: HeroSceneRefs) => {
   useEffect(() => {
+    //------------------------------------------
+    // Scene State
+    //------------------------------------------
+
     const scene = {
       time: 0,
 
@@ -26,9 +31,15 @@ const useHeroScene = ({
       },
     };
 
-    //------------------------------------------------
+    //------------------------------------------
+    // Flight History
+    //------------------------------------------
+
+    const history: { x: number; y: number }[] = [];
+
+    //------------------------------------------
     // Mouse
-    //------------------------------------------------
+    //------------------------------------------
 
     const handleMove = (e: MouseEvent) => {
       scene.mouse.x =
@@ -42,43 +53,28 @@ const useHeroScene = ({
 
     window.addEventListener("mousemove", handleMove);
 
-    //------------------------------------------------
-    // Trail
-    //------------------------------------------------
-
-    if (trailRef.current) {
-      const length =
-        trailRef.current.getTotalLength();
-
-      trailRef.current.style.strokeDasharray =
-        `${length}`;
-
-      trailRef.current.style.strokeDashoffset =
-        `${length}`;
-    }
-
-    //------------------------------------------------
-    // Glow breathing
-    //------------------------------------------------
+    //------------------------------------------
+    // Glow Pulse
+    //------------------------------------------
 
     gsap.to(glowRef.current, {
       scale: HERO_SCENE.glow.pulseScale,
-
       duration: HERO_SCENE.glow.pulseSpeed,
-
       repeat: -1,
-
       yoyo: true,
-
       ease: "sine.inOut",
     });
 
-    //------------------------------------------------
-    // Main Engine
-    //------------------------------------------------
+    //------------------------------------------
+    // Main Render Loop
+    //------------------------------------------
 
     const tick = () => {
-      scene.time += HERO_SCENE.plane.speed;
+      scene.time += 1;
+
+      //------------------------------------------
+      // Smooth Mouse
+      //------------------------------------------
 
       scene.smoothMouse.x +=
         (scene.mouse.x - scene.smoothMouse.x) *
@@ -89,42 +85,24 @@ const useHeroScene = ({
         0.08;
 
       //------------------------------------------
-      // Plane
+      // Plane Physics
       //------------------------------------------
 
-      const px =
-        Math.sin(scene.time) *
-        HERO_SCENE.plane.amplitudeX;
+      const plane = getPlaneState(scene.time);
 
-      const py =
-        Math.sin(scene.time * 2) *
-        HERO_SCENE.plane.amplitudeY;
+      const planeX =
+  plane.x +
+  scene.smoothMouse.x * 20;
 
-      const rotation =
-        Math.sin(scene.time) *
-        HERO_SCENE.plane.rotation;
-
-      const scale =
-        1 +
-        Math.cos(scene.time * 2) *
-          HERO_SCENE.plane.scale;
+const planeY =
+  plane.y +
+  scene.smoothMouse.y * 12;
 
       gsap.set(planeRef.current, {
-        x:
-          px +
-          scene.smoothMouse.x *
-            HERO_SCENE.plane.mouseStrength *
-            100,
-
-        y:
-          py +
-          scene.smoothMouse.y *
-            HERO_SCENE.plane.mouseStrength *
-            100,
-
-        rotation,
-
-        scale,
+        x: planeX,
+        y: planeY,
+        rotation: plane.rotation + plane.bank,
+        transformOrigin: "50% 50%",
       });
 
       //------------------------------------------
@@ -132,12 +110,9 @@ const useHeroScene = ({
       //------------------------------------------
 
       gsap.set(shadowRef.current, {
-        x: px * 0.55,
-
-        y: py * 0.35,
-
-        scale: 1 - py / 120,
-
+        x: planeX + 35,
+        y: planeY + 70,
+        scale: 0.82,
         opacity: 0.18,
       });
 
@@ -160,55 +135,62 @@ const useHeroScene = ({
       //------------------------------------------
 
       cloudRefs.current.forEach((cloud, i) => {
-        const config =
-          HERO_SCENE.clouds[i];
+        const config = HERO_SCENE.clouds[i];
 
         if (!cloud || !config) return;
 
         gsap.set(cloud, {
           x:
-            Math.sin(
-              scene.time * config.speed
-            ) * config.amplitude +
+            Math.sin(scene.time * 0.01 * config.speed) *
+              config.amplitude +
             scene.smoothMouse.x *
               config.parallax *
               100,
 
           y:
-            Math.cos(
-              scene.time * config.speed
-            ) *
-            (config.amplitude * 0.5),
+            Math.cos(scene.time * 0.008 * config.speed) *
+            config.amplitude *
+            0.4,
         });
       });
 
       //------------------------------------------
-      // Trail
+      // Flight Trail
       //------------------------------------------
 
+      history.push({
+        x: plane.x + 260,
+        y: plane.y + 95,
+      });
+
+      if (history.length > 90) {
+        history.shift();
+      }
+
       if (trailRef.current) {
-        const length =
-          trailRef.current.getTotalLength();
+        const path = history
+          .map((p, index) =>
+            `${index === 0 ? "M" : "L"} ${p.x} ${p.y}`
+          )
+          .join(" ");
 
-        const progress =
-          (Math.sin(scene.time * 0.5) + 1) /
-          2;
-
-        gsap.set(trailRef.current, {
-          strokeDashoffset:
-            length -
-            length * progress,
-        });
+        trailRef.current.setAttribute("d", path);
       }
     };
 
     gsap.ticker.add(tick);
+
+    //------------------------------------------
+    // Cleanup
+    //------------------------------------------
 
     return () => {
       window.removeEventListener(
         "mousemove",
         handleMove
       );
+
+      gsap.killTweensOf(glowRef.current);
 
       gsap.ticker.remove(tick);
     };

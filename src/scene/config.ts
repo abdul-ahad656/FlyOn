@@ -2,55 +2,61 @@
 
 export const HERO_SCENE = {
   plane: {
-    amplitudeX: 45,
-    amplitudeY: 18,
-    speed: 0.009,
-    rotation: 4,
-    scale: 0.03,
-    mouseStrength: 0.12,
+    // Floating motion
+    amplitudeX: 22,
+    amplitudeY: 10,
+
+    // Floating speed
+    speed: 0.008,
+
+    // Maximum bank angle
+    rotation: 8,
+
+    // Gentle breathing scale
+    scale: 0.015,
+
+    // Mouse influence
+    mouseStrength: 0.08,
   },
 
   glow: {
-    mouseStrength: 25,
-    pulseSpeed: 2,
-    pulseScale: 1.08,
+    mouseStrength: 18,
+    pulseSpeed: 2.4,
+    pulseScale: 1.05,
   },
 
   clouds: [
     {
-      speed: 0.18,
-      amplitude: 20,
-      parallax: 0.15,
+      speed: 0.12,
+      amplitude: 14,
+      parallax: 0.10,
     },
     {
-      speed: 0.13,
-      amplitude: 28,
-      parallax: 0.22,
+      speed: 0.08,
+      amplitude: 18,
+      parallax: 0.16,
     },
     {
-      speed: 0.22,
-      amplitude: 16,
-      parallax: 0.12,
+      speed: 0.15,
+      amplitude: 12,
+      parallax: 0.08,
     },
   ],
 
   trail: {
-    speed: 2,
+    speed: 1,
   },
 
   flight: {
-    speed:0.00018,
-    path:[
+    // VERY IMPORTANT
+    speed: 0.003,
 
-      {x:1300,y:520},
-
-      {x:1100,y:300},
-
-      {x:650,y:420},
-
-      {x:420,y:150}
-
-    ]
-
-  }
+    // Designed for a ~700px hero scene
+    path: [
+      { x: 540, y: 380 },
+      { x: 500, y: 250 },
+      { x: 330, y: 180 },
+      { x: 180, y: 280 },
+    ],
+  },
 };

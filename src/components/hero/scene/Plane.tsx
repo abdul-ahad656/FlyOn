@@ -8,22 +8,82 @@ const Plane = forwardRef<HTMLDivElement, Props>(
   ({ shadowRef }, ref) => {
     return (
       <>
-        {/* Shadow */}
+        {/* Plane Shadow */}
         <div
           ref={shadowRef}
-          className="absolute right-[14%] top-[58%] h-24 w-24 rounded-full bg-slate-900/15 blur-3xl"
+          className="
+            plane-shadow
+            absolute
+            left-0
+            top-0
+            h-20
+            w-20
+            rounded-full
+            bg-slate-900/10
+            blur-3xl
+            pointer-events-none
+            will-change-transform
+            -z-10
+          "
         />
 
         {/* Plane */}
         <div
           ref={ref}
-          className="absolute right-[12%] top-[20%] will-change-transform"
+          className="
+            plane
+            absolute
+            left-0
+            top-0
+            origin-center
+            pointer-events-none
+            select-none
+            will-change-transform
+            [transform-style:preserve-3d]
+            [backface-visibility:hidden]
+          "
         >
+          {/* Soft Atmospheric Glow */}
+          <div
+            className="
+              absolute
+              inset-0
+              scale-125
+              rounded-full
+              bg-sky-300/10
+              blur-[80px]
+              -z-10
+            "
+          />
+
+          {/* Plane SVG */}
           <img
             src="/src/assets/illustrations/plane.svg"
             alt="Flyon Plane"
-            className="w-[540px] drop-shadow-[0_45px_60px_rgba(0,0,0,.28)] select-none"
             draggable={false}
+            className="
+              block
+              w-[430px]
+              xl:w-[470px]
+              select-none
+              will-change-transform
+              drop-shadow-[0_35px_60px_rgba(15,23,42,0.25)]
+            "
+          />
+
+          {/* Engine Light */}
+          <div
+            className="
+              absolute
+              right-8
+              top-1/2
+              h-3
+              w-3
+              -translate-y-1/2
+              rounded-full
+              bg-cyan-300/60
+              blur-lg
+            "
           />
         </div>
       </>
