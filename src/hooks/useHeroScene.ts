@@ -90,13 +90,9 @@ const useHeroScene = ({
 
       const plane = getPlaneState(scene.time);
 
-      const planeX =
-  plane.x +
-  scene.smoothMouse.x * 20;
-
-const planeY =
-  plane.y +
-  scene.smoothMouse.y * 12;
+      // Mouse influence reduced ~50% from original (10px / 6px max drift)
+      const planeX = plane.x + scene.smoothMouse.x * 10;
+      const planeY = plane.y + scene.smoothMouse.y * 6;
 
       gsap.set(planeRef.current, {
         x: planeX,
@@ -110,10 +106,10 @@ const planeY =
       //------------------------------------------
 
       gsap.set(shadowRef.current, {
-        x: planeX + 35,
-        y: planeY + 70,
-        scale: 0.82,
-        opacity: 0.18,
+        x: planeX + 20,
+        y: planeY + 55,
+        scale: 0.75,
+        opacity: 0.12,
       });
 
       //------------------------------------------
@@ -121,13 +117,8 @@ const planeY =
       //------------------------------------------
 
       gsap.set(glowRef.current, {
-        x:
-          scene.smoothMouse.x *
-          HERO_SCENE.glow.mouseStrength,
-
-        y:
-          scene.smoothMouse.y *
-          HERO_SCENE.glow.mouseStrength,
+        x: scene.smoothMouse.x * HERO_SCENE.glow.mouseStrength,
+        y: scene.smoothMouse.y * HERO_SCENE.glow.mouseStrength,
       });
 
       //------------------------------------------
@@ -143,14 +134,11 @@ const planeY =
           x:
             Math.sin(scene.time * 0.01 * config.speed) *
               config.amplitude +
-            scene.smoothMouse.x *
-              config.parallax *
-              100,
+            scene.smoothMouse.x * config.parallax * 60,
 
           y:
             Math.cos(scene.time * 0.008 * config.speed) *
-            config.amplitude *
-            0.4,
+            config.amplitude * 0.4,
         });
       });
 
@@ -158,23 +146,31 @@ const planeY =
       // Flight Trail
       //------------------------------------------
 
+      // trailX/Y is computed from plane dimensions in physics.ts
+      // — no magic hardcoded offsets needed
       history.push({
-        x: plane.x + 260,
-        y: plane.y + 95,
+        x: plane.trailX + scene.smoothMouse.x * 10,
+        y: plane.trailY + scene.smoothMouse.y * 6,
       });
 
-      if (history.length > 90) {
+      if (history.length > 70) {
         history.shift();
       }
 
       if (trailRef.current) {
-        const path = history
+        const pathStr = history
           .map((p, index) =>
-            `${index === 0 ? "M" : "L"} ${p.x} ${p.y}`
+            `${index === 0 ? "M" : "L"} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`
           )
           .join(" ");
 
-        trailRef.current.setAttribute("d", path);
+        trailRef.current.setAttribute("d", pathStr);
+
+        // Also update the soft glow layer (sibling path with id="trail-glow")
+        const glowPath = trailRef.current.previousElementSibling as SVGPathElement | null;
+        if (glowPath) {
+          glowPath.setAttribute("d", pathStr);
+        }
       }
     };
 

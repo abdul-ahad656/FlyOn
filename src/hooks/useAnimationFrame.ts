@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 const useAnimationFrame = (
   callback: (delta: number, elapsed: number) => void
 ) => {
-  const frame = useRef<number>();
+  const frame = useRef<number>(undefined);
 
   const previous = useRef(performance.now());
 

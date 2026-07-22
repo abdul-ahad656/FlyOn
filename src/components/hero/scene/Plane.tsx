@@ -16,11 +16,11 @@ const Plane = forwardRef<HTMLDivElement, Props>(
             absolute
             left-0
             top-0
-            h-20
-            w-20
+            h-14
+            w-14
             rounded-full
-            bg-slate-900/10
-            blur-3xl
+            bg-slate-900/8
+            blur-2xl
             pointer-events-none
             will-change-transform
             -z-10
@@ -43,46 +43,45 @@ const Plane = forwardRef<HTMLDivElement, Props>(
             [backface-visibility:hidden]
           "
         >
-          {/* Soft Atmospheric Glow */}
+          {/* Soft Atmospheric Glow — reduced, feels like scattered light */}
           <div
             className="
               absolute
               inset-0
-              scale-125
+              scale-110
               rounded-full
-              bg-sky-300/10
-              blur-[80px]
+              bg-sky-200/6
+              blur-[60px]
               -z-10
             "
           />
 
-          {/* Plane SVG */}
+          {/* Plane SVG — width matches PLANE_WIDTH in physics.ts */}
           <img
             src="/src/assets/illustrations/plane.svg"
             alt="Flyon Plane"
             draggable={false}
             className="
               block
-              w-[430px]
-              xl:w-[470px]
+              w-[410px]
               select-none
               will-change-transform
-              drop-shadow-[0_35px_60px_rgba(15,23,42,0.25)]
+              drop-shadow-[0_20px_40px_rgba(15,23,42,0.18)]
             "
           />
 
-          {/* Engine Light */}
+          {/* Engine Light — positioned at rear (right side for right-facing plane) */}
           <div
             className="
               absolute
-              right-8
+              right-6
               top-1/2
-              h-3
-              w-3
+              h-2
+              w-2
               -translate-y-1/2
               rounded-full
-              bg-cyan-300/60
-              blur-lg
+              bg-cyan-300/50
+              blur-md
             "
           />
         </div>
@@ -93,4 +92,4 @@ const Plane = forwardRef<HTMLDivElement, Props>(
 
 Plane.displayName = "Plane";
 
-export default Plane;
+export default Plane;
