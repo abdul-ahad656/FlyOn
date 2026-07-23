@@ -5,12 +5,13 @@ import AboutContent from "./AboutContent";
 import AboutImage from "./AboutImage";
 import useAboutReveal from "../../hooks/useAboutReveal";
 import AboutBackground from "./background/AboutBackground";
-
+import useAboutScrollDepth from "../../hooks/useAboutScrollDepth";
 
 const About = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useAboutReveal(sectionRef);
+  useAboutScrollDepth({ sectionRef });
 
   return (
     <section

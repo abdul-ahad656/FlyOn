@@ -13,6 +13,7 @@ const AboutGrid = ({ layersRef, offset = 3 }: Props) => {
         layersRef.current[offset] = { element: el, depth: 8 };
       }}
       className="
+        about-grid
         absolute
         inset-0
         opacity-[0.04]

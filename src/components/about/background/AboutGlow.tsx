@@ -72,6 +72,7 @@ const AboutGlow = ({ layersRef }: Props) => {
           };
         }}
         className="
+          about-glow
           absolute
           left-[-180px]
           top-[-140px]
@@ -92,6 +93,7 @@ const AboutGlow = ({ layersRef }: Props) => {
           };
         }}
         className="
+          about-glow
           absolute
           right-[-150px]
           top-[18%]
@@ -112,6 +114,7 @@ const AboutGlow = ({ layersRef }: Props) => {
           };
         }}
         className="
+          about-glow
           absolute
           bottom-[-220px]
           left-[35%]
