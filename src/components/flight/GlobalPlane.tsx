@@ -64,6 +64,7 @@ const GlobalPlane = forwardRef<HTMLDivElement, GlobalPlaneProps>(
 
           <div
             className="
+              global-plane-engine
               absolute
               right-[5%]
               top-1/2

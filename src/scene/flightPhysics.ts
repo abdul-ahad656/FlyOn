@@ -21,6 +21,8 @@ export interface FlightSample {
   phase: FlightPhase;
   trailX: number;
   trailY: number;
+  /** Engine glow intensity 0–1. */
+  engineGlow: number;
 }
 
 export interface IdleSample {
@@ -178,15 +180,30 @@ export const getFlightSample = (opts: {
   const turbX = Math.sin(time * 0.11) * turb;
   const turbY = Math.cos(time * 0.17) * turb * 0.85;
 
-  // Landing settle + soft bounce
-  let bounce = 0;
-  const bounceWindow = FLIGHT.landing.bounceWindow;
-  if (progress > 1 - bounceWindow) {
-    const u = (progress - (1 - bounceWindow)) / bounceWindow;
-    bounce =
-      Math.sin(u * Math.PI) *
-      FLIGHT.landing.bounceAmplitude *
-      (1 - u);
+  const isLanded = progress >= 0.98;
+  const isApproach = landMix > 0;
+
+  // Overshoot past the gate, then one bounce settle
+  let landingOffsetY = 0;
+  const { overshootAmplitude, overshootWindow, bounceAmplitude, bounceWindow } =
+    FLIGHT.landing;
+
+  if (isApproach && !isLanded) {
+    const overshootStart = 1 - overshootWindow - bounceWindow;
+
+    if (progress > overshootStart && progress <= overshootStart + overshootWindow) {
+      const u =
+        (progress - overshootStart) / Math.max(overshootWindow, 0.0001);
+      landingOffsetY =
+        Math.sin(u * Math.PI * 0.5) * overshootAmplitude;
+    } else if (progress > overshootStart + overshootWindow) {
+      const u =
+        (progress - overshootStart - overshootWindow) /
+        Math.max(bounceWindow, 0.0001);
+      landingOffsetY =
+        overshootAmplitude * (1 - u) +
+        Math.sin(u * Math.PI) * bounceAmplitude * (1 - u);
+    }
   }
 
   const scale = lerp(
@@ -197,17 +214,17 @@ export const getFlightSample = (opts: {
 
   const centreX =
     pos.x +
-    idle.x * idleMix +
+    idle.x * idleMix * (isLanded ? 0 : 1) +
     mouseX * FLIGHT.motion.mouseStrengthX * idleMix +
     turbX +
     idle.vibrate * idleMix;
 
   const centreY =
     pos.y +
-    idle.y * idleMix +
+    idle.y * idleMix * (isLanded ? 0 : 1) +
     mouseY * FLIGHT.motion.mouseStrengthY * idleMix +
-    turbY -
-    bounce;
+    turbY +
+    landingOffsetY;
 
   const rotation = lerp(
     FLIGHT.start.rotation + idle.bank * idleMix,
@@ -215,8 +232,12 @@ export const getFlightSample = (opts: {
     flightMix
   );
 
-  const bank = _smoothBank + idle.bank * idleMix;
+  const bank = (_smoothBank + idle.bank * idleMix) * (isLanded ? 0 : 1);
   const finalScale = scale * lerp(idle.scale, 1, flightMix);
+
+  const engineGlow = isLanded
+    ? 0
+    : clamp(1 - landMix * 1.15, 0, 1) * flightMix;
 
   // Top-left for GSAP (fixed layer origin 0,0)
   const x = centreX - planeWidth / 2;
@@ -238,6 +259,7 @@ export const getFlightSample = (opts: {
     phase: getFlightPhase(progress),
     trailX,
     trailY,
+    engineGlow,
   };
 };
 

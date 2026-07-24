@@ -34,6 +34,7 @@ export default {
       fontFamily: {
         heading: ["General Sans", "sans-serif"],
         body: ["Satoshi", "sans-serif"],
+        logo: ['"Playfair Display"', "Georgia", "Times New Roman", "serif"],
       },
 
       boxShadow: {

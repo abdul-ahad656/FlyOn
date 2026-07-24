@@ -69,6 +69,7 @@ const useFlightDirector = ({
       smoothMouse: { x: number; y: number };
       trailHistory: { x: number; y: number }[];
       trailOpacity: number;
+      logoRevealed: boolean;
     } = {
       time: 0,
       targetProgress: 0,
@@ -77,6 +78,36 @@ const useFlightDirector = ({
       smoothMouse: { x: 0, y: 0 },
       trailHistory: [],
       trailOpacity: FLIGHT.trail.opacity,
+      logoRevealed: false,
+    };
+
+    let logoRevealTween: gsap.core.Tween | null = null;
+
+    const engineGlow = plane.querySelector(
+      ".global-plane-engine"
+    ) as HTMLElement | null;
+
+    const resetLogo = () => {
+      logoRevealTween?.kill();
+      logoRevealTween = null;
+      state.logoRevealed = false;
+
+      if (logoEl) {
+        gsap.set(logoEl, { opacity: 0, y: 20 });
+      }
+    };
+
+    const revealLogo = () => {
+      if (!logoEl || state.logoRevealed) return;
+
+      state.logoRevealed = true;
+      logoRevealTween = gsap.to(logoEl, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        overwrite: true,
+      });
     };
 
     //------------------------------------------
@@ -94,7 +125,7 @@ const useFlightDirector = ({
     }
 
     if (logoEl) {
-      gsap.set(logoEl, { opacity: 0, y: 12 });
+      gsap.set(logoEl, { opacity: 0, y: 20 });
     }
 
     const intro = gsap.to(plane, {
@@ -226,6 +257,10 @@ const useFlightDirector = ({
       setPlaneRot(attitude);
       setPlaneScale(sample.scale);
 
+      if (engineGlow) {
+        gsap.set(engineGlow, { opacity: sample.engineGlow });
+      }
+
       if (setShadowX && setShadowY && setShadowScale && setShadowOpacity) {
         setShadowX(sample.x + planeW * 0.12);
         setShadowY(sample.y + planeH * 0.55);
@@ -252,14 +287,13 @@ const useFlightDirector = ({
         writeTrail(0);
       }
 
-      // Logo fades in on final approach
+      // Logo reveal — triggered once as the plane enters final approach
       if (logoEl) {
-        const logoOpacity = Math.max(0, (sample.landMix - 0.35) / 0.65);
-        const logoY = (1 - logoOpacity) * 14;
-        gsap.set(logoEl, {
-          opacity: logoOpacity,
-          y: logoY,
-        });
+        if (sample.landMix >= 0.55) {
+          revealLogo();
+        } else if (sample.flightMix < 0.35 || sample.phase === "idle") {
+          resetLogo();
+        }
       }
     };
 
@@ -273,6 +307,7 @@ const useFlightDirector = ({
 
     return () => {
       intro.kill();
+      logoRevealTween?.kill();
       trigger.kill();
       gsap.ticker.remove(tick);
       window.removeEventListener("mousemove", onMove);
@@ -280,6 +315,7 @@ const useFlightDirector = ({
       gsap.killTweensOf(plane);
       if (shadow) gsap.killTweensOf(shadow);
       if (logoEl) gsap.killTweensOf(logoEl);
+      if (engineGlow) gsap.killTweensOf(engineGlow);
     };
   }, [planeRef, shadowRef, trailRef, trailGlowRef, landingEl, logoEl]);
 };
