@@ -12,26 +12,19 @@ import useHeroRefs from "../../hooks/useHeroRefs";
 const Hero = () => {
   const refs = useHeroRefs();
 
-  // Continuous physics engine
+  // Atmosphere only (glow + clouds) — plane is global
   useHeroScene({
-    planeRef: refs.planeRef,
-    shadowRef: refs.shadowRef,
     glowRef: refs.glowRef,
-    trailRef: refs.trailRef,
     cloudRefs: refs.cloudRefs,
   });
 
-  // Intro cinematic timeline
   useHeroTimeline({
     badgeRef: refs.badgeRef,
     headingRef: refs.headingRef,
     descriptionRef: refs.descriptionRef,
     buttonsRef: refs.buttonsRef,
     statsRef: refs.statsRef,
-
-    planeRef: refs.planeRef,
     glowRef: refs.glowRef,
-    trailRef: refs.trailRef,
     cloudRefs: refs.cloudRefs,
   });
 
@@ -42,13 +35,7 @@ const Hero = () => {
     >
       <HeroBackground />
 
-      <HeroScene
-        planeRef={refs.planeRef}
-        shadowRef={refs.shadowRef}
-        glowRef={refs.glowRef}
-        trailRef={refs.trailRef}
-        cloudRefs={refs.cloudRefs}
-      />
+      <HeroScene glowRef={refs.glowRef} cloudRefs={refs.cloudRefs} />
 
       <Container className="relative z-30">
         <div className="grid items-center gap-16 lg:grid-cols-2">
@@ -60,7 +47,8 @@ const Hero = () => {
             statsRef={refs.statsRef}
           />
 
-          <div />
+          {/* Visual runway for the global plane over the right column */}
+          <div aria-hidden className="hidden min-h-[280px] lg:block" />
         </div>
       </Container>
 
