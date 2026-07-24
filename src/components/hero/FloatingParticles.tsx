@@ -40,7 +40,7 @@ const FloatingParticles = () => {
       {[...Array(18)].map((_, i) => (
         <span
           key={i}
-          className="particle absolute rounded-full bg-primary/20"
+          className="flight-env-particle particle absolute rounded-full bg-primary/20"
           style={{
             width: `${4 + Math.random() * 6}px`,
             height: `${4 + Math.random() * 6}px`,

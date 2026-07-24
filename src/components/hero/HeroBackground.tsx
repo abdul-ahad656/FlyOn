@@ -45,6 +45,7 @@ const HeroBackground = () => {
       <div
         ref={gradientRef}
         className="
+          flight-env-hero-bg
           absolute
           inset-0
           -z-50

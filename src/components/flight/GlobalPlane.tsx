@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import planeUrl from "../../assets/illustrations/plane.svg?url";
+import planeUrl from "../../assets/illustrations/plane.png";
 import PlaneShadow from "./PlaneShadow";
 
 interface GlobalPlaneProps {
@@ -68,6 +68,7 @@ const GlobalPlane = forwardRef<HTMLDivElement, GlobalPlaneProps>(
               absolute
               right-[5%]
               top-1/2
+              z-[1]
               h-2
               w-2
               -translate-y-1/2
@@ -75,6 +76,23 @@ const GlobalPlane = forwardRef<HTMLDivElement, GlobalPlaneProps>(
               bg-cyan-300/55
               blur-md
             "
+            aria-hidden
+          />
+
+          <div
+            className="
+              global-plane-engine-halo
+              absolute
+              right-[4%]
+              top-1/2
+              h-5
+              w-5
+              -translate-y-1/2
+              rounded-full
+              bg-cyan-200/30
+              blur-lg
+            "
+            style={{ opacity: 0 }}
             aria-hidden
           />
         </div>

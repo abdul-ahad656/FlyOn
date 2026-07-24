@@ -1,6 +1,7 @@
 import Clouds from "./scene/Clouds";
 import SunGlow from "./scene/SunGlow";
 import Atmosphere from "./scene/Atmosphere";
+import FloatingParticles from "./FloatingParticles";
 
 interface Props {
   glowRef: React.RefObject<HTMLDivElement | null>;
@@ -14,6 +15,7 @@ const HeroScene = ({ glowRef, cloudRefs }: Props) => {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <Atmosphere />
+      <FloatingParticles />
       <SunGlow ref={glowRef} />
       <Clouds refs={cloudRefs} />
     </div>

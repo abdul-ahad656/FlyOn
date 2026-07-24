@@ -19,6 +19,11 @@ const FlightTrail = forwardRef<SVGPathElement, FlightTrailProps>(
         aria-hidden
       >
         <defs>
+          <linearGradient id="flight-trail-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor={FLIGHT.trail.color} stopOpacity="0" />
+            <stop offset="35%" stopColor={FLIGHT.trail.color} stopOpacity="0.25" />
+            <stop offset="100%" stopColor={FLIGHT.trail.color} stopOpacity="0.85" />
+          </linearGradient>
           <filter
             id="flight-trail-blur"
             x="-20%"
@@ -26,7 +31,7 @@ const FlightTrail = forwardRef<SVGPathElement, FlightTrailProps>(
             width="140%"
             height="140%"
           >
-            <feGaussianBlur stdDeviation="1.4" />
+            <feGaussianBlur stdDeviation="1.6" />
           </filter>
         </defs>
 
@@ -46,7 +51,7 @@ const FlightTrail = forwardRef<SVGPathElement, FlightTrailProps>(
           ref={ref}
           d=""
           fill="none"
-          stroke={FLIGHT.trail.color}
+          stroke="url(#flight-trail-gradient)"
           strokeWidth={FLIGHT.trail.width}
           strokeLinecap="round"
           strokeLinejoin="round"

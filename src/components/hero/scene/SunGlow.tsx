@@ -5,6 +5,7 @@ const SunGlow = forwardRef<HTMLDivElement>((_, ref) => {
     <div
       ref={ref}
       className="
+      hero-glow
       absolute
       right-[8%]
       top-[5%]

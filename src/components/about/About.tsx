@@ -21,7 +21,7 @@ const About = () => {
     >
       <AboutBackground />
 
-      <Container className="relative z-10">
+      <Container className="flight-env-about-content relative z-10">
         <div className="grid items-center gap-24 lg:grid-cols-2">
           <AboutContent />
 

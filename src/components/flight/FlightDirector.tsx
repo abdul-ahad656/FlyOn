@@ -3,6 +3,7 @@ import { useRef } from "react";
 import GlobalPlane from "./GlobalPlane";
 import FlightTrail from "./FlightTrail";
 import useFlightDirector from "../../hooks/useFlightDirector";
+import useFlightEnvironment from "../../hooks/useFlightEnvironment";
 
 /**
  * Page-level flight orchestrator.
@@ -21,6 +22,8 @@ const FlightDirector = () => {
     trailRef,
     trailGlowRef,
   });
+
+  useFlightEnvironment();
 
   return (
     <>

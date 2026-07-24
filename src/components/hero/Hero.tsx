@@ -37,7 +37,7 @@ const Hero = () => {
 
       <HeroScene glowRef={refs.glowRef} cloudRefs={refs.cloudRefs} />
 
-      <Container className="relative z-30">
+      <Container className="flight-env-hero-content relative z-30">
         <div className="grid items-center gap-16 lg:grid-cols-2">
           <HeroContent
             badgeRef={refs.badgeRef}

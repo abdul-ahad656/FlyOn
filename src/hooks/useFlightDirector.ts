@@ -5,11 +5,28 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useFlight } from "../context/FlightContext";
 import { FLIGHT } from "../scene/flightConfig";
 import {
+  composeAttitude,
+  composeScale,
+  createDynamicsState,
+  enhanceFlightMotion,
+  resetDynamicsState,
+} from "../scene/flightDynamics";
+import {
+  computeEnvironmentOffsets,
+} from "../scene/flightEnvironment";
+import {
   getFlightSample,
   measureHeroStart,
   measureLandingCentre,
   resetFlightPhysics,
 } from "../scene/flightPhysics";
+import { publishFlightRuntime, resetFlightRuntime } from "../scene/flightRuntime";
+import {
+  buildContrailPath,
+  fadeTrailOpacity,
+  shouldDrawTrail,
+} from "../scene/flightTrail";
+import { runFlightTickExtensions } from "../scene/flightTickExtensions";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,6 +59,9 @@ const useFlightDirector = ({
     if (!heroEl || !aboutEl) return;
 
     resetFlightPhysics();
+    resetFlightRuntime();
+
+    const dynamics = createDynamicsState();
 
     const setPlaneX = gsap.quickSetter(plane, "x", "px");
     const setPlaneY = gsap.quickSetter(plane, "y", "px");
@@ -85,6 +105,10 @@ const useFlightDirector = ({
 
     const engineGlow = plane.querySelector(
       ".global-plane-engine"
+    ) as HTMLElement | null;
+
+    const engineHalo = plane.querySelector(
+      ".global-plane-engine-halo"
     ) as HTMLElement | null;
 
     const resetLogo = () => {
@@ -185,13 +209,13 @@ const useFlightDirector = ({
       return { width, height };
     };
 
-    const writeTrail = (opacity: number) => {
-      const pathStr = state.trailHistory
-        .map(
-          (p, i) =>
-            `${i === 0 ? "M" : "L"} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`
-        )
-        .join(" ");
+    const writeTrail = (opacity: number, velocity: number, flightMix: number) => {
+      const pathStr = buildContrailPath(
+        state.trailHistory,
+        state.time,
+        velocity,
+        flightMix
+      );
 
       if (trailRef.current) {
         trailRef.current.setAttribute("d", pathStr);
@@ -202,7 +226,7 @@ const useFlightDirector = ({
         trailGlowRef.current.setAttribute("d", pathStr);
         trailGlowRef.current.setAttribute(
           "opacity",
-          String(opacity * 0.36)
+          String(opacity * 0.32)
         );
       }
     };
@@ -251,49 +275,96 @@ const useFlightDirector = ({
         mouseY: state.smoothMouse.y,
       });
 
-      // Combined aircraft attitude
-      const attitude = sample.rotation + sample.bank * 0.35 + sample.pitch * 0.25;
+      const motion = enhanceFlightMotion(
+        dynamics,
+        sample,
+        state.smoothProgress,
+        state.time
+      );
 
-      setPlaneX(sample.x);
-      setPlaneY(sample.y);
+      const attitude = composeAttitude(motion);
+      const scale = composeScale(motion);
+      const { sample: enhanced } = motion;
+
+      setPlaneX(enhanced.x);
+      setPlaneY(enhanced.y);
       setPlaneRot(attitude);
-      setPlaneScale(sample.scale);
+      setPlaneScale(scale);
 
       if (engineGlow) {
-        gsap.set(engineGlow, { opacity: sample.engineGlow });
+        gsap.set(engineGlow, {
+          opacity: motion.engineGlow * 0.85,
+          scale: motion.engineScale,
+          force3D: true,
+        });
+      }
+
+      if (engineHalo) {
+        gsap.set(engineHalo, {
+          opacity: motion.engineGlow * 0.35,
+          scale: 1.6 + motion.engineGlow * 0.5,
+          force3D: true,
+        });
       }
 
       if (setShadowX && setShadowY && setShadowScale && setShadowOpacity) {
-        setShadowX(sample.x + planeW * 0.12);
-        setShadowY(sample.y + planeH * 0.55);
-        setShadowScale(0.7 + sample.flightMix * 0.15);
-        setShadowOpacity(0.1 + sample.flightMix * 0.06);
+        setShadowX(enhanced.x + planeW * 0.12);
+        setShadowY(enhanced.y + planeH * 0.55);
+        setShadowScale(0.7 + enhanced.flightMix * 0.15);
+        setShadowOpacity(0.1 + enhanced.flightMix * 0.06);
       }
 
-      // Contrail — only while airborne
-      if (sample.flightMix > 0.05 && sample.landMix < 0.92) {
-        state.trailHistory.push({ x: sample.trailX, y: sample.trailY });
+      if (shouldDrawTrail(enhanced.flightMix, enhanced.landMix)) {
+        state.trailHistory.push({ x: enhanced.trailX, y: enhanced.trailY });
         if (state.trailHistory.length > FLIGHT.trail.maxPoints) {
           state.trailHistory.shift();
         }
-        state.trailOpacity = FLIGHT.trail.opacity * sample.flightMix;
-        writeTrail(state.trailOpacity);
-      } else if (sample.landMix >= 0.5 || sample.phase === "landed") {
-        state.trailOpacity += (0 - state.trailOpacity) * 0.04;
-        writeTrail(state.trailOpacity);
+        state.trailOpacity =
+          FLIGHT.trail.opacity * enhanced.flightMix * (1 - enhanced.landMix * 0.4);
+        writeTrail(state.trailOpacity, motion.velocity, enhanced.flightMix);
+      } else if (enhanced.landMix >= 0.5 || enhanced.phase === "landed") {
+        state.trailOpacity = fadeTrailOpacity(state.trailOpacity);
+        writeTrail(state.trailOpacity, motion.velocity, enhanced.flightMix);
         if (state.trailOpacity < 0.02) {
           state.trailHistory.length = 0;
         }
-      } else if (sample.phase === "idle") {
+      } else if (enhanced.phase === "idle") {
         state.trailHistory.length = 0;
-        writeTrail(0);
+        writeTrail(0, 0, 0);
       }
 
-      // Logo reveal — triggered once as the plane enters final approach
+      const environment = computeEnvironmentOffsets({
+        flightMix: enhanced.flightMix,
+        landMix: enhanced.landMix,
+        velocity: motion.velocity,
+        phase: enhanced.phase,
+        time: state.time,
+      });
+
+      publishFlightRuntime({
+        sample: enhanced,
+        velocity: motion.velocity,
+        smoothVelocity: dynamics.smoothVelocity,
+        phase: enhanced.phase,
+        flightMix: enhanced.flightMix,
+        landMix: enhanced.landMix,
+        engineGlow: motion.engineGlow,
+        trailOpacity: state.trailOpacity,
+        environment,
+      });
+
+      runFlightTickExtensions({
+        time: state.time,
+        progress: state.smoothProgress,
+        motion,
+        environment,
+        trailOpacity: state.trailOpacity,
+      });
+
       if (logoEl) {
-        if (sample.landMix >= 0.55) {
+        if (enhanced.landMix >= 0.55) {
           revealLogo();
-        } else if (sample.flightMix < 0.35 || sample.phase === "idle") {
+        } else if (enhanced.flightMix < 0.35 || enhanced.phase === "idle") {
           resetLogo();
         }
       }
@@ -318,6 +389,9 @@ const useFlightDirector = ({
       if (shadow) gsap.killTweensOf(shadow);
       if (logoEl) gsap.killTweensOf(logoEl);
       if (engineGlow) gsap.killTweensOf(engineGlow);
+      if (engineHalo) gsap.killTweensOf(engineHalo);
+      resetDynamicsState(dynamics);
+      resetFlightRuntime();
     };
   }, [planeRef, shadowRef, trailRef, trailGlowRef, landingEl, logoEl]);
 };

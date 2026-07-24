@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import gsap from "gsap";
 
 import { HERO_SCENE } from "../scene/config";
+import { flightRuntime } from "../scene/flightRuntime";
 import type { HeroSceneRefs } from "../scene/types";
 
 /**
@@ -42,8 +43,12 @@ const useHeroScene = ({ glowRef, cloudRefs }: HeroSceneRefs) => {
         (scene.mouse.y - scene.smoothMouse.y) * 0.08;
 
       gsap.set(glowRef.current, {
-        x: scene.smoothMouse.x * HERO_SCENE.glow.mouseStrength,
-        y: scene.smoothMouse.y * HERO_SCENE.glow.mouseStrength,
+        x:
+          scene.smoothMouse.x * HERO_SCENE.glow.mouseStrength +
+          flightRuntime.environment.heroGlowShiftX,
+        y:
+          scene.smoothMouse.y * HERO_SCENE.glow.mouseStrength +
+          flightRuntime.environment.heroGlowShiftY,
       });
 
       cloudRefs.current.forEach((cloud, i) => {
@@ -53,11 +58,14 @@ const useHeroScene = ({ glowRef, cloudRefs }: HeroSceneRefs) => {
         gsap.set(cloud, {
           x:
             Math.sin(scene.time * 0.01 * config.speed) * config.amplitude +
-            scene.smoothMouse.x * config.parallax * 60,
+            scene.smoothMouse.x * config.parallax * 60 +
+            flightRuntime.environment.cloudShiftX,
           y:
             Math.cos(scene.time * 0.008 * config.speed) *
-            config.amplitude *
-            0.4,
+              config.amplitude *
+              0.4 +
+            flightRuntime.environment.cloudShiftY,
+          force3D: true,
         });
       });
     };

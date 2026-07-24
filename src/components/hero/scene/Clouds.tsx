@@ -33,7 +33,7 @@ const Clouds = forwardRef<HTMLDivElement, Props>(
               if (el) refs.current[index] = el;
             }}
             src={cloud.src}
-            className={`${cloud.className} pointer-events-none select-none will-change-transform`}
+            className={`${cloud.className} flight-env-cloud pointer-events-none select-none will-change-transform`}
             draggable={false}
             alt=""
           />
