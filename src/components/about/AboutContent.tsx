@@ -3,12 +3,12 @@ import { ArrowRight } from "lucide-react";
 import Button from "../common/Button";
 import Magnetic from "../animations/Magnetic";
 import AboutFeatures from "./AboutFeatures";
-import { LandingTarget } from "../flight";
+import { LandingTarget } from "./branding";
 
 const AboutContent = () => {
   return (
     <div>
-      {/* Global plane lands here — above the Flyon wordmark */}
+      {/* Flyon branding — global plane lands above this wordmark */}
       <LandingTarget />
 
       {/* Badge */}

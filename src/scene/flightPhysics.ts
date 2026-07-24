@@ -21,6 +21,8 @@ export interface FlightSample {
   phase: FlightPhase;
   trailX: number;
   trailY: number;
+  /** Engine glow intensity 0–1. */
+  engineGlow: number;
 }
 
 export interface IdleSample {
@@ -30,6 +32,12 @@ export interface IdleSample {
   scale: number;
   vibrate: number;
 }
+
+/** Document Y → viewport Y for `position: fixed` transforms. */
+export const documentToViewport = (point: Point): Point => ({
+  x: point.x,
+  y: point.y - (typeof window !== "undefined" ? window.scrollY : 0),
+});
 
 /** Aircraft-style ease: accelerate, cruise, decelerate into landing. */
 export const flightEase = (t: number): number => {
@@ -41,25 +49,34 @@ export const flightEase = (t: number): number => {
   }
 
   const u = (p - 0.35) / 0.65;
-  // Stronger ease-out into the gate
   return 0.4 + 0.6 * (1 - Math.pow(1 - u, 2.6));
 };
 
-/** Build a cubic path between live start/end (viewport space). */
+/**
+ * Build a cubic path in document space between start and end.
+ * Handles are chord-relative so the arc stays on-screen.
+ */
 export const buildFlightPath = (
   start: Point,
-  end: Point,
-  vw: number,
-  vh: number
+  end: Point
 ): [Point, Point, Point, Point] => {
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  const len = Math.hypot(dx, dy) || 1;
+
+  // Perpendicular unit vector — positive arc bows left of the flight direction
+  const nx = -dy / len;
+  const ny = dx / len;
+  const arc = len * 0.18;
+
   const c1 = {
-    x: start.x + (end.x - start.x) * 0.22 + vw * FLIGHT.path.c1.x,
-    y: start.y + (end.y - start.y) * 0.12 + vh * FLIGHT.path.c1.y,
+    x: start.x + dx * 0.18 + nx * arc * FLIGHT.path.arc1,
+    y: start.y + dy * 0.12 + ny * arc * FLIGHT.path.arc1,
   };
 
   const c2 = {
-    x: start.x + (end.x - start.x) * 0.68 + vw * FLIGHT.path.c2.x,
-    y: start.y + (end.y - start.y) * 0.55 + vh * FLIGHT.path.c2.y,
+    x: start.x + dx * 0.72 + nx * arc * FLIGHT.path.arc2,
+    y: start.y + dy * 0.62 + ny * arc * FLIGHT.path.arc2,
   };
 
   return [start, c1, c2, end];
@@ -116,8 +133,9 @@ export const resetFlightPhysics = () => {
 };
 
 /**
- * Resolve plane centre pose for a given scroll progress.
- * `start` / `end` are viewport-space centres from getBoundingClientRect.
+ * Resolve plane pose for scroll progress.
+ * Path is computed in document space (stable while scrolling),
+ * then converted to viewport space for the fixed plane layer.
  */
 export const getFlightSample = (opts: {
   progress: number;
@@ -132,15 +150,11 @@ export const getFlightSample = (opts: {
   const { progress, time, start, end, planeWidth, planeHeight, mouseX, mouseY } =
     opts;
 
-  const vw = typeof window !== "undefined" ? window.innerWidth : 1280;
-  const vh = typeof window !== "undefined" ? window.innerHeight : 800;
-
-  const path = buildFlightPath(start, end, vw, vh);
+  const path = buildFlightPath(start, end);
   const eased = flightEase(progress);
   const pos = sampleBezier(eased, path);
   const { angle, dx, dy } = sampleHeading(eased, path);
 
-  // Smooth heading (unwrap)
   let delta = angle - _smoothHeading;
   if (delta > 180) delta -= 360;
   if (delta < -180) delta += 360;
@@ -154,7 +168,6 @@ export const getFlightSample = (opts: {
     1
   );
 
-  // Bank from lateral velocity; bleed off on approach
   const rawBank = clamp(dx * 90, -FLIGHT.physics.maxBank, FLIGHT.physics.maxBank);
   const targetBank = lerp(rawBank, 0, landMix) * flightMix;
   _smoothBank += (targetBank - _smoothBank) * FLIGHT.physics.bankSmoothing;
@@ -178,36 +191,48 @@ export const getFlightSample = (opts: {
   const turbX = Math.sin(time * 0.11) * turb;
   const turbY = Math.cos(time * 0.17) * turb * 0.85;
 
-  // Landing settle + soft bounce
-  let bounce = 0;
-  const bounceWindow = FLIGHT.landing.bounceWindow;
-  if (progress > 1 - bounceWindow) {
-    const u = (progress - (1 - bounceWindow)) / bounceWindow;
-    bounce =
-      Math.sin(u * Math.PI) *
-      FLIGHT.landing.bounceAmplitude *
-      (1 - u);
+  const isLanded = progress >= 0.98;
+  const isApproach = landMix > 0;
+
+  let landingOffsetY = 0;
+  const { overshootAmplitude, overshootWindow, bounceAmplitude, bounceWindow } =
+    FLIGHT.landing;
+
+  if (isApproach && !isLanded) {
+    const overshootStart = 1 - overshootWindow - bounceWindow;
+
+    if (progress > overshootStart && progress <= overshootStart + overshootWindow) {
+      const u =
+        (progress - overshootStart) / Math.max(overshootWindow, 0.0001);
+      landingOffsetY = Math.sin(u * Math.PI * 0.5) * overshootAmplitude;
+    } else if (progress > overshootStart + overshootWindow) {
+      const u =
+        (progress - overshootStart - overshootWindow) /
+        Math.max(bounceWindow, 0.0001);
+      landingOffsetY =
+        overshootAmplitude * (1 - u) +
+        Math.sin(u * Math.PI) * bounceAmplitude * (1 - u);
+    }
   }
 
-  const scale = lerp(
-    FLIGHT.start.scale,
-    FLIGHT.landing.scale,
-    eased
-  );
+  const scale = lerp(FLIGHT.start.scale, FLIGHT.landing.scale, eased);
 
-  const centreX =
-    pos.x +
-    idle.x * idleMix +
-    mouseX * FLIGHT.motion.mouseStrengthX * idleMix +
-    turbX +
-    idle.vibrate * idleMix;
+  const centreDoc = {
+    x:
+      pos.x +
+      idle.x * idleMix * (isLanded ? 0 : 1) +
+      mouseX * FLIGHT.motion.mouseStrengthX * idleMix +
+      turbX +
+      idle.vibrate * idleMix,
+    y:
+      pos.y +
+      idle.y * idleMix * (isLanded ? 0 : 1) +
+      mouseY * FLIGHT.motion.mouseStrengthY * idleMix +
+      turbY +
+      landingOffsetY,
+  };
 
-  const centreY =
-    pos.y +
-    idle.y * idleMix +
-    mouseY * FLIGHT.motion.mouseStrengthY * idleMix +
-    turbY -
-    bounce;
+  const centre = documentToViewport(centreDoc);
 
   const rotation = lerp(
     FLIGHT.start.rotation + idle.bank * idleMix,
@@ -215,14 +240,16 @@ export const getFlightSample = (opts: {
     flightMix
   );
 
-  const bank = _smoothBank + idle.bank * idleMix;
+  const bank = (_smoothBank + idle.bank * idleMix) * (isLanded ? 0 : 1);
   const finalScale = scale * lerp(idle.scale, 1, flightMix);
 
-  // Top-left for GSAP (fixed layer origin 0,0)
-  const x = centreX - planeWidth / 2;
-  const y = centreY - planeHeight / 2;
+  const engineGlow = isLanded
+    ? 0
+    : clamp(1 - landMix * 1.15, 0, 1) * flightMix;
 
-  // Tail attachment (right side of right-facing SVG)
+  const x = centre.x - planeWidth / 2;
+  const y = centre.y - planeHeight / 2;
+
   const trailX = x + planeWidth * 0.88;
   const trailY = y + planeHeight * 0.5;
 
@@ -238,30 +265,41 @@ export const getFlightSample = (opts: {
     phase: getFlightPhase(progress),
     trailX,
     trailY,
+    engineGlow,
   };
 };
 
-/** Measure start centre from the Hero section using config ratios. */
-export const measureHeroStart = (
-  heroEl: HTMLElement
-): Point => {
+/** Hero idle origin in document space (stable on the page). */
+export const measureHeroStart = (heroEl: HTMLElement): Point => {
   const rect = heroEl.getBoundingClientRect();
+  const scrollY = window.scrollY;
+
+  const xRatio =
+    window.innerWidth < 640
+      ? 0.55
+      : window.innerWidth < 1024
+        ? 0.62
+        : FLIGHT.start.x;
+
   return {
-    x: rect.left + rect.width * FLIGHT.start.x,
-    y: rect.top + rect.height * FLIGHT.start.y,
+    x: rect.left + rect.width * xRatio,
+    y: rect.top + scrollY + rect.height * FLIGHT.start.y,
   };
 };
 
-/** Landing centre: target rect + hover offset above it. */
+/** Landing aim point in document space (stable on the page). */
 export const measureLandingCentre = (
   targetEl: HTMLElement,
   planeHeight: number
 ): Point => {
   const rect = targetEl.getBoundingClientRect();
+  const scrollY = window.scrollY;
+
   return {
     x: rect.left + rect.width / 2,
     y:
       rect.top +
+      scrollY +
       rect.height / 2 -
       planeHeight * FLIGHT.landing.hoverOffsetY,
   };
