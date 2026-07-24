@@ -28,8 +28,7 @@ const LandingTarget = forwardRef<HTMLDivElement>((_, ref) => {
         mb-12
         flex
         flex-col
-        items-center
-        sm:items-start
+        items-start
       "
     >
       {/* Aim point — plane flies toward this element (never hardcoded coords) */}
@@ -39,29 +38,22 @@ const LandingTarget = forwardRef<HTMLDivElement>((_, ref) => {
           flight-landing-target
           pointer-events-none
           absolute
-          left-1/2
+          left-[3.5rem]
           top-0
           h-2
           w-2
-          -translate-x-1/2
-          sm:left-[3.5rem]
-          sm:translate-x-0
         "
         aria-hidden
       />
 
-      {/* Vertical runway — plane parks above the wordmark */}
+      {/* Vertical runway — plane parks directly above the wordmark */}
       <div
         className="
           flex
           w-full
           flex-col
-          items-center
-          pt-14
-          sm:items-start
-          sm:pl-6
-          sm:pt-16
-          md:pt-[4.5rem]
+          items-start
+          pl-6
         "
       >
         <LogoReveal />

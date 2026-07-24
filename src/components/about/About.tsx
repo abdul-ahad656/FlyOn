@@ -23,9 +23,9 @@ const About = () => {
 
       <Container className="flight-env-about-content relative z-10">
         <div className="grid items-center gap-24 lg:grid-cols-2">
-          <AboutContent />
-
           <AboutImage />
+
+          <AboutContent />
         </div>
       </Container>
     </section>

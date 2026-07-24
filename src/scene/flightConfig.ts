@@ -21,7 +21,7 @@ export const FLIGHT = {
     rotation: 0,
     scale: 0.78,
     /** Vertical offset above the measured landing target centre (plane half-height factor). */
-    hoverOffsetY: 0.48,
+    hoverOffsetY: 0.1,
     /** Single overshoot past the gate before bounce settle. */
     overshootAmplitude: 16,
     overshootWindow: 0.06,

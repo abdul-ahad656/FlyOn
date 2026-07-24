@@ -8,7 +8,7 @@ const FlyonLogo = forwardRef<HTMLDivElement>((_, ref) => {
   return (
     <div
       ref={ref}
-      className="flyon-logo relative select-none text-center"
+      className="flyon-logo relative select-none"
       aria-label="Flyon Luxury Travel"
     >
       <div className="relative inline-block">
@@ -26,22 +26,25 @@ const FlyonLogo = forwardRef<HTMLDivElement>((_, ref) => {
         >
           Flyon
         </h2>
-      </div>
 
-      <p
-        className="
-          mt-4
-          text-[10px]
-          font-medium
-          uppercase
-          tracking-[0.42em]
-          text-accent
-          sm:text-[11px]
-          sm:tracking-[0.48em]
-        "
-      >
-        Luxury Travel
-      </p>
+        <p
+          className="
+            absolute
+            right-0
+            top-full
+            text-[9px]
+            font-medium
+            uppercase
+            tracking-[0.42em]
+            text-accent
+            leading-none
+            sm:text-[10px]
+            sm:tracking-[0.48em]
+          "
+        >
+          Luxury Travel
+        </p>
+      </div>
     </div>
   );
 });
