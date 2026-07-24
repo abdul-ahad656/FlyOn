@@ -5,7 +5,7 @@ import { ArrowRight, Menu, X } from "lucide-react";
 
 import Container from "../common/Container";
 import Button from "../common/Button";
-import NavCard from "./navCard";
+import NavCard from "./NavCard";
 import { navigation } from "../../data/navigation";
 
 const Navbar = () => {

@@ -31,28 +31,6 @@ const AboutContent = () => {
         Luxury Travel Since 2010
       </div>
 
-      {/* Heading */}
-
-      <h2
-        className="
-          about-heading
-          mt-8
-          max-w-xl
-          font-heading
-          text-5xl
-          font-bold
-          leading-tight
-          text-slate-900
-          lg:text-6xl
-        "
-      >
-        Luxury isn't just a destination.
-
-        <span className="block text-primary">
-          It's every moment of the journey.
-        </span>
-      </h2>
-
       {/* Description */}
 
       <p
