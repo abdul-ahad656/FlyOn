@@ -1,13 +1,7 @@
 import type { RefObject } from "react";
 
+/** Atmosphere refs still owned by the Hero scene. */
 export interface HeroSceneRefs {
-  planeRef: RefObject<HTMLDivElement | null>;
-
-  shadowRef: RefObject<HTMLDivElement | null>;
-
   glowRef: RefObject<HTMLDivElement | null>;
-
-  trailRef: RefObject<SVGPathElement | null>;
-
   cloudRefs: RefObject<HTMLImageElement[]>;
 }
