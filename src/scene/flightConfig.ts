@@ -5,23 +5,23 @@
 export const FLIGHT = {
   /** Idle hover origin inside #home (section-relative ratios). */
   start: {
-    x: 0.72,
-    y: 0.42,
+    x: 0.68,
+    y: 0.38,
     rotation: -8,
     scale: 1,
   },
 
-  /** Relative bezier handles (multiples of viewport size) for aircraft-style arcs. */
+  /** Chord-relative arc strength (multipliers on path length). */
   path: {
-    c1: { x: -0.18, y: -0.22 },
-    c2: { x: 0.08, y: -0.06 },
+    arc1: 0.35,
+    arc2: -0.12,
   },
 
   landing: {
     rotation: 0,
     scale: 0.78,
     /** Vertical offset above the measured landing target centre (plane half-height factor). */
-    hoverOffsetY: 0.62,
+    hoverOffsetY: 0.48,
     /** Single overshoot past the gate before bounce settle. */
     overshootAmplitude: 16,
     overshootWindow: 0.06,
@@ -81,8 +81,8 @@ export const FLIGHT = {
   scroll: {
     /** ScrollTrigger mapping from Hero → About. */
     start: "top top",
-    end: "bottom center",
-    scrub: 1.15,
+    end: "top 32%",
+    scrub: 0.85,
   },
 
   intro: {

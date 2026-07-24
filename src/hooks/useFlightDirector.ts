@@ -225,18 +225,20 @@ const useFlightDirector = ({
         (state.targetProgress - state.smoothProgress) *
         FLIGHT.physics.progressSmoothing;
 
-      const { width: planeW, height: planeH } = measurePlaneSize();
-
       const start = measureHeroStart(heroEl);
 
-      // Fallback end if LandingTarget has not mounted yet
-      const aboutRect = aboutEl.getBoundingClientRect();
+      const { width: planeW, height: planeH } = measurePlaneSize();
+
       const end = landingEl
         ? measureLandingCentre(landingEl, planeH)
-        : {
-            x: aboutRect.left + aboutRect.width * 0.22,
-            y: aboutRect.top + aboutRect.height * 0.22,
-          };
+        : (() => {
+            const aboutRect = aboutEl.getBoundingClientRect();
+            const scrollY = window.scrollY;
+            return {
+              x: aboutRect.left + aboutRect.width * 0.22,
+              y: aboutRect.top + scrollY + aboutRect.height * 0.18,
+            };
+          })();
 
       const sample = getFlightSample({
         progress: state.smoothProgress,
