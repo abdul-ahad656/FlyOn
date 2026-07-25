@@ -1,152 +1,133 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Flyon
 
-Currently, two official plugins are available:
+Luxury travel, cinematic motion, and a landing page built to feel like a journey.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+<br />
 
-## React Compiler
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![GSAP](https://img.shields.io/badge/GSAP-Animation-88CE02?style=for-the-badge&logo=greensock&logoColor=white)](https://gsap.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-UI-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+<br />
 
-## Expanding the ESLint configuration
+**A premium travel agency experience with a glassy navigation shell, anchored sections, and a scroll-synced flight system that carries the brand story across the page.**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+<br />
 
-```js
-export default defineConfig([
-  <div align="center">
+[Quick start](#quick-start) · [What it includes](#what-it-includes) · [Project layout](#project-layout) · [Stack](#stack)
 
-  # Flyon
+</div>
 
-  Luxury travel, cinematic motion, and a landing page built to feel like a journey.
+---
 
-  <br />
+## What is Flyon?
 
-  [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-  [![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-  [![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
-  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-  [![GSAP](https://img.shields.io/badge/GSAP-Animation-88CE02?style=for-the-badge&logo=greensock&logoColor=white)](https://gsap.com/)
-  [![Framer Motion](https://img.shields.io/badge/Framer_Motion-UI-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+Flyon is a luxury travel landing page built with **React 19**, **TypeScript**, and **Vite**. The current experience is a single-page site with a cinematic hero, an about section, a global flight animation layer, and a polished navigation/footer shell.
 
-  <br />
+The design leans into premium travel branding: smooth motion, glassmorphism, elegant typography, and a scroll-reactive plane/contrail system driven by custom scene logic.
 
-  **A premium travel agency experience with a glassy navigation shell, anchored sections, and a scroll-synced flight system that carries the brand story across the page.**
+---
 
-  <br />
+## What it includes
 
-  [Quick start](#quick-start) · [What it includes](#what-it-includes) · [Project layout](#project-layout) · [Stack](#stack)
+| Area | What you get |
+|------|--------------|
+| **Hero** | Bold headline, supporting copy, CTA area, live stats, and atmospheric background motion |
+| **About** | Brand story, luxury travel positioning, feature blocks, and a landing target for the flight animation |
+| **Flight system** | Scroll-synced global plane, contrail trail, hover/landing dynamics, and scene orchestration |
+| **Navigation** | Glass-style navbar with mobile menu and anchored section links |
+| **Layout** | Shared main layout with reusable header/footer framing |
+| **UI stack** | Tailwind CSS 4, Framer Motion, GSAP, Lucide icons, and reusable common components |
 
-  </div>
+**Stack:** React 19 · TypeScript · Vite · Tailwind CSS 4 · GSAP · Framer Motion · React Router DOM scaffold · SVG support via `vite-plugin-svgr`
 
-  ---
+---
 
-  ## What is Flyon?
+## Quick start
 
-  Flyon is a luxury travel landing page built with **React 19**, **TypeScript**, and **Vite**. The current experience is a single-page site with a cinematic hero, an about section, a global flight animation layer, and a polished navigation/footer shell.
+### 1. Install dependencies
 
-  The design leans into premium travel branding: smooth motion, glassmorphism, elegant typography, and a scroll-reactive plane/contrail system driven by custom scene logic.
+```bash
+npm install
+```
 
-  ---
+### 2. Run the dev server
 
-  ## What it includes
+```bash
+npm run dev
+```
 
-  | Area | What you get |
-  |------|--------------|
-  | **Hero** | Bold headline, supporting copy, CTA area, live stats, and atmospheric background motion |
-  | **About** | Brand story, luxury travel positioning, feature blocks, and a landing target for the flight animation |
-  | **Flight system** | Scroll-synced global plane, contrail trail, hover/landing dynamics, and scene orchestration |
-  | **Navigation** | Glass-style navbar with mobile menu and anchored section links |
-  | **Layout** | Shared main layout with reusable header/footer framing |
-  | **UI stack** | Tailwind CSS 4, Framer Motion, GSAP, Lucide icons, and reusable common components |
+Open **http://localhost:5173**.
 
-  **Stack:** React 19 · TypeScript · Vite · Tailwind CSS 4 · GSAP · Framer Motion · React Router DOM scaffold · SVG support via `vite-plugin-svgr`
+### 3. Build for production
 
-  ---
+```bash
+npm run build
+```
 
-  ## Quick start
+### 4. Lint the codebase
 
-  ### 1. Install dependencies
+```bash
+npm run lint
+```
 
-  ```bash
-  npm install
-  ```
+### 5. Preview the production build
 
-  ### 2. Run the dev server
+```bash
+npm run preview
+```
 
-  ```bash
-  npm run dev
-  ```
+---
 
-  Open **http://localhost:5173**.
+## Project layout
 
-  ### 3. Build for production
+| Path | Purpose |
+|------|---------|
+| `src/pages/` | Page entry points such as the home experience |
+| `src/layouts/` | Shared layout wrappers like the main site shell |
+| `src/components/hero/` | Hero section, background, content, and scroll indicator |
+| `src/components/about/` | About section content, visuals, and supporting features |
+| `src/components/flight/` | Global plane, trail, and flight orchestration components |
+| `src/components/layout/` | Navbar and footer used across the site |
+| `src/hooks/` | Animation and scene hooks for hero, about, and flight behavior |
+| `src/scene/` | Flight physics, motion config, renderer helpers, and runtime logic |
+| `src/data/` | Navigation and content data used by the UI |
+| `src/styles/` | Global styles, typography, variables, and animation utilities |
+| `src/assets/` | Fonts, illustrations, textures, and other static design assets |
+| `public/` | Public-facing static files |
 
-  ```bash
-  npm run build
-  ```
+---
 
-  ### 4. Lint the codebase
+## Stack
 
-  ```bash
-  npm run lint
-  ```
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS 4
+- GSAP
+- Framer Motion
+- Lucide React
+- React Router DOM
+- Embla Carousel React
+- vite-plugin-svgr
 
-  ### 5. Preview the production build
+---
 
-  ```bash
-  npm run preview
-  ```
+## Notes
 
-  ---
+- The current app is centered around a single landing route, with the main experience assembled in [src/pages/Home.tsx](src/pages/Home.tsx).
+- The flight animation system is driven from the [src/scene/](src/scene) and [src/components/flight/](src/components/flight) layers.
+- Section anchors are wired for `#home` and `#about`, with navigation entries prepared for future anchored sections.
 
-  ## Project layout
+---
 
-  | Path | Purpose |
-  |------|---------|
-  | `src/pages/` | Page entry points such as the home experience |
-  | `src/layouts/` | Shared layout wrappers like the main site shell |
-  | `src/components/hero/` | Hero section, background, content, and scroll indicator |
-  | `src/components/about/` | About section content, visuals, and supporting features |
-  | `src/components/flight/` | Global plane, trail, and flight orchestration components |
-  | `src/components/layout/` | Navbar and footer used across the site |
-  | `src/hooks/` | Animation and scene hooks for hero, about, and flight behavior |
-  | `src/scene/` | Flight physics, motion config, renderer helpers, and runtime logic |
-  | `src/data/` | Navigation and content data used by the UI |
-  | `src/styles/` | Global styles, typography, variables, and animation utilities |
-  | `src/assets/` | Fonts, illustrations, textures, and other static design assets |
-  | `public/` | Public-facing static files |
+<div align="center">
 
-  ---
+<sub>Flyon · Luxury travel agency experience built for motion, clarity, and premium presentation</sub>
 
-  ## Stack
-
-  - React 19
-  - TypeScript
-  - Vite
-  - Tailwind CSS 4
-  - GSAP
-  - Framer Motion
-  - Lucide React
-  - React Router DOM
-  - Embla Carousel React
-  - `vite-plugin-svgr`
-
-  ---
-
-  ## Notes
-
-  - The current app is centered around a single landing route, with the main experience assembled in [src/pages/Home.tsx](src/pages/Home.tsx).
-  - The flight animation system is driven from the `src/scene/` and `src/components/flight/` layers.
-  - Section anchors are wired for `#home` and `#about`, with navigation entries prepared for future anchored sections.
-
-  ---
-
-  <div align="center">
-
-  <sub>Flyon · Luxury travel agency experience built for motion, clarity, and premium presentation</sub>
-
-  </div>
+</div>
