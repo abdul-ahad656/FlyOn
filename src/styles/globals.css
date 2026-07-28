@@ -54,3 +54,25 @@ ul{
 
     list-style:none;
 }
+
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(0px);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: .6;
+  }
+
+  50% {
+    transform: translateY(-22px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-45px);
+    opacity: 0;
+  }
+}
