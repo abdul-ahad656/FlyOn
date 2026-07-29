@@ -9,7 +9,6 @@ const FeaturedService = () => {
   const imageRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const sweepRef = useRef<HTMLDivElement>(null);
-
   const contentRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
@@ -29,10 +28,11 @@ const FeaturedService = () => {
   glowRef,
   sweepRef,
 });
-  return (
+   return (
     <section
       ref={sectionRef}
       className="
+        relative
         mt-24
         overflow-hidden
         rounded-[42px]
@@ -45,19 +45,19 @@ const FeaturedService = () => {
     >
       <div className="grid lg:grid-cols-2">
         <FeaturedImage
-  imageRef={imageRef}
-  glowRef={glowRef}
-  sweepRef={sweepRef}
-/>
+          imageRef={imageRef}
+          glowRef={glowRef}
+          sweepRef={sweepRef}
+        />
 
         <FeaturedContent
-  contentRef={contentRef}
-  headingRef={headingRef}
-  descriptionRef={descriptionRef}
-  featuresRef={featuresRef}
-  statsRef={statsRef}
-  buttonRef={buttonRef}
-/>
+          contentRef={contentRef}
+          headingRef={headingRef}
+          descriptionRef={descriptionRef}
+          featuresRef={featuresRef}
+          statsRef={statsRef}
+          buttonRef={buttonRef}
+        />
       </div>
     </section>
   );

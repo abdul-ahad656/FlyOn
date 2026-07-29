@@ -1,16 +1,17 @@
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { useRef } from "react";
 import { gsap } from "gsap";
 
 interface MagneticProps {
   children: ReactNode;
   className?: string;
+  strength?: number;
 }
 
-const Magnetic = ({ children, className = "" }: MagneticProps) => {
+const Magnetic = ({ children, className = "", strength = 0.25 }: MagneticProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMove = (e: MouseEvent<HTMLDivElement>) => {
     const el = ref.current;
     if (!el) return;
 
@@ -20,8 +21,8 @@ const Magnetic = ({ children, className = "" }: MagneticProps) => {
     const y = e.clientY - rect.top - rect.height / 2;
 
     gsap.to(el, {
-      x: x * 0.25,
-      y: y * 0.25,
+      x: x * strength,
+      y: y * strength,
       duration: 0.4,
       ease: "power3.out",
     });

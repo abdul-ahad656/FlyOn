@@ -1,48 +1,58 @@
 import {
   Plane,
   Building2,
-  Globe2,
   Car,
-  FileText,
   ConciergeBell,
+  Globe,
+  FileCheck,
 } from "lucide-react";
 
 export const services = [
   {
-    icon: Plane,
+    number: "01",
     title: "Private Jet Charter",
     description:
-      "Fly anywhere in complete comfort with luxury private aviation tailored to your schedule.",
-    featured: true,
+      "Fly anywhere with luxury private aviation tailored around your schedule.",
+    icon: Plane,
   },
+
   {
-    icon: Building2,
+    number: "02",
     title: "Luxury Resorts",
     description:
-      "Handpicked five-star resorts and villas across the world's most iconic destinations.",
+      "Exclusive stays in handpicked five-star destinations around the world.",
+    icon: Building2,
   },
+
   {
-    icon: Globe2,
+    number: "03",
     title: "Custom World Tours",
     description:
-      "Personalized itineraries designed around your interests, pace, and travel dreams.",
+      "Personalized journeys crafted around your interests.",
+    icon: Globe,
   },
+
   {
-    icon: Car,
+    number: "04",
     title: "VIP Transfers",
     description:
-      "Premium airport pickups, chauffeurs, and luxury transportation worldwide.",
+      "Luxury chauffeur and airport transfer services worldwide.",
+    icon: Car,
   },
+
   {
-    icon: FileText,
+    number: "05",
     title: "Visa Assistance",
     description:
-      "Fast, reliable visa support for international travel with expert guidance.",
+      "Fast, reliable visa processing with expert support.",
+    icon: FileCheck,
   },
+
   {
-    icon: ConciergeBell,
-    title: "24/7 Concierge",
+    number: "06",
+    title: "Travel Concierge",
     description:
-      "Dedicated travel specialists available anytime during your entire journey.",
+      "Dedicated travel experts available before and during every journey.",
+    icon: ConciergeBell,
   },
 ];
