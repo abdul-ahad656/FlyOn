@@ -1,20 +1,23 @@
-import type { RefObject } from "react";
+import { ArrowRight } from "lucide-react";
 
 import Button from "../common/Button";
 import Magnetic from "../animations/Magnetic";
 
-import FeaturedStats from "./FeaturedStats";
 import FeaturedFeatures from "./FeaturedFeatures";
-
-import { ArrowRight } from "lucide-react";
+import FeaturedStats from "./FeaturedStats";
 
 interface Props {
-  contentRef: RefObject<HTMLDivElement | null>;
-  headingRef: RefObject<HTMLHeadingElement | null>;
-  descriptionRef: RefObject<HTMLParagraphElement | null>;
-  featuresRef: RefObject<HTMLDivElement | null>;
-  statsRef: RefObject<HTMLDivElement | null>;
-  buttonRef: RefObject<HTMLDivElement | null>;
+  contentRef: React.RefObject<HTMLDivElement | null>;
+
+  headingRef: React.RefObject<HTMLHeadingElement | null>;
+
+  descriptionRef: React.RefObject<HTMLParagraphElement | null>;
+
+  featuresRef: React.RefObject<HTMLDivElement | null>;
+
+  statsRef: React.RefObject<HTMLDivElement | null>;
+
+  buttonRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const FeaturedContent = ({
@@ -26,42 +29,107 @@ const FeaturedContent = ({
   buttonRef,
 }: Props) => {
   return (
-    <div ref={contentRef} className="flex flex-col justify-center p-14">
+    <div
+      ref={contentRef}
+      className="
+        flex
+        flex-col
+        justify-center
+        px-12
+        py-16
+        lg:px-16
+      "
+    >
+      {/* Badge */}
 
-      <p className="font-medium uppercase tracking-[3px] text-primary">
-        Private Jet Charter
-      </p>
+      <span
+        className="
+          inline-flex
+          w-fit
+          rounded-full
+          border
+          border-primary/20
+          bg-primary/5
+          px-5
+          py-2
+          text-sm
+          font-medium
+          uppercase
+          tracking-[2px]
+          text-primary
+        "
+      >
+        Premium Experience
+      </span>
 
-      <h2 ref={headingRef} className="mt-5 font-heading text-5xl font-bold leading-tight">
+      {/* Heading */}
+
+      <h2
+        ref={headingRef}
+        className="
+          mt-8
+          font-heading
+          text-5xl
+          font-bold
+          leading-tight
+          text-slate-900
+          lg:text-6xl
+        "
+      >
         Travel
+
         <span className="block text-primary">
           Without Limits
         </span>
       </h2>
 
-      <p ref={descriptionRef} className="mt-8 text-lg leading-9 text-text-light">
+      {/* Description */}
+
+      <p
+        ref={descriptionRef}
+        className="
+          mt-8
+          max-w-xl
+          text-lg
+          leading-9
+          text-text-light
+        "
+      >
         Experience private aviation with personalized routes,
         luxury cabins, flexible schedules, and dedicated
-        concierge service designed around your lifestyle.
+        concierge services crafted around your lifestyle.
       </p>
 
-      <div ref={featuresRef}>
+      {/* Features */}
+
+      <div
+        ref={featuresRef}
+        className="mt-10"
+      >
         <FeaturedFeatures />
       </div>
 
-      <div ref={statsRef}>
+      {/* Stats */}
+
+      <div
+        ref={statsRef}
+        className="mt-12"
+      >
         <FeaturedStats />
       </div>
 
-      <div ref={buttonRef} className="mt-10">
+      {/* CTA */}
 
+      <div
+        ref={buttonRef}
+        className="mt-12"
+      >
         <Magnetic>
-
           <Button className="group flex items-center">
-
             Explore Service
 
             <ArrowRight
+              size={18}
               className="
                 ml-2
                 transition-transform
@@ -69,13 +137,9 @@ const FeaturedContent = ({
                 group-hover:translate-x-1
               "
             />
-
           </Button>
-
         </Magnetic>
-
       </div>
-
     </div>
   );
 };

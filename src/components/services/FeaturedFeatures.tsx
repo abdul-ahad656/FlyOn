@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react";
 
 const FeaturedContent = () => {
   return (
-    <div className="flex flex-col justify-center p-14">
+    <div className="feature-item flex flex-col justify-center p-14">
 
       <p className="font-medium uppercase tracking-[3px] text-primary">
         Private Jet Charter
