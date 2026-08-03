@@ -1,7 +1,7 @@
 import FeaturedGlow from "./FeaturedGlow";
 import FeaturedParticles from "./FeaturedParticles";
 
-import jetImage from "../../assets/services/private-jet.jpeg";
+import jetImage from "../../../assets/services/private-jet.jpeg";
 
 interface Props {
   imageRef: React.RefObject<HTMLDivElement | null>;

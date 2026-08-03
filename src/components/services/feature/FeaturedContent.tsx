@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 
-import Button from "../common/Button";
-import Magnetic from "../animations/Magnetic";
+import Button from "../../common/Button";
+import Magnetic from "../../animations/Magnetic";
 
 import FeaturedFeatures from "./FeaturedFeatures";
 import FeaturedStats from "./FeaturedStats";
@@ -145,3 +145,4 @@ const FeaturedContent = ({
 };
 
 export default FeaturedContent;
+

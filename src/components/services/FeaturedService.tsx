@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
-import FeaturedImage from "./FeaturedImage";
-import FeaturedContent from "./FeaturedContent";
+import FeaturedImage from "./feature/FeaturedImage";
+import FeaturedContent from "./feature/FeaturedContent";
 import useFeaturedService from "../../hooks/useFeaturedService";
 
 const FeaturedService = () => {
@@ -16,19 +16,19 @@ const FeaturedService = () => {
   const statsRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
 
-  useFeaturedService({
-  sectionRef,
-  imageRef,
-  contentRef,
-  headingRef,
-  descriptionRef,
-  featuresRef,
-  statsRef,
-  buttonRef,
-  glowRef,
-  sweepRef,
-});
-   return (
+    useFeaturedService({
+    sectionRef,
+    imageRef,
+    contentRef,
+    headingRef,
+    descriptionRef,
+    featuresRef,
+    statsRef,
+    buttonRef,
+    glowRef,
+    sweepRef,
+  });
+  return (
     <section
       ref={sectionRef}
       className="
