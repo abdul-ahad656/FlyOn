@@ -21,7 +21,7 @@ export interface FeaturedServiceRefs {
 }
 
 export interface ServicesSceneRefs {
-  sectionRef: React.RefObject<HTMLDivElement | null>;
+  sectionRef: React.RefObject<HTMLElement | null>;
 
   headerRef: React.RefObject<HTMLDivElement | null>;
 
