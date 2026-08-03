@@ -1,6 +1,6 @@
 import Container from "../common/Container";
 
-import ServiceBackground from "./ServiceBackground";
+import ServiceBackground from "./background/ServiceBackground";
 import ServicesHeader from "./ServicesHeader";
 import FeaturedService from "./FeaturedService";
 import ServiceGrid from "./ServiceGrid";

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 import Magnetic from "../animations/Magnetic";
 import ServiceIcon from "./ServiceIcon";
-import ServiceGlow from "./ServiceGlow";
+import ServiceGlow from "./background/ServiceGlow";
 import ServiceBorder from "./ServiceBorder";
 import ServiceSpotlight from "./ServiceSpotlight";
 
