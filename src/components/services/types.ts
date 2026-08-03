@@ -19,3 +19,21 @@ export interface FeaturedServiceRefs {
 
   sweepRef: React.RefObject<HTMLDivElement | null>;
 }
+
+export interface ServicesSceneRefs {
+  sectionRef: React.RefObject<HTMLDivElement | null>;
+
+  headerRef: React.RefObject<HTMLDivElement | null>;
+
+  featuredRef: React.RefObject<HTMLDivElement | null>;
+
+  dividerRef: React.RefObject<HTMLDivElement | null>;
+
+  gridRef: React.RefObject<HTMLDivElement | null>;
+
+  ctaRef: React.RefObject<HTMLDivElement | null>;
+
+  backgroundRef: React.RefObject<HTMLDivElement | null>;
+
+  glowRef: React.RefObject<HTMLDivElement | null>;
+}
