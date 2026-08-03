@@ -12,8 +12,6 @@ const useFeaturedService = ({
 
   imageRef,
 
-  contentRef,
-
   headingRef,
 
   descriptionRef,

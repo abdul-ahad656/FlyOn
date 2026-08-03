@@ -1,6 +1,6 @@
 interface Props {
-  backgroundRef: React.RefObject<HTMLDivElement | null>;
-  glowRef: React.RefObject<HTMLDivElement | null>;
+  backgroundRef?: React.RefObject<HTMLDivElement | null>;
+  glowRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 const ServicesGlow = ({
@@ -66,6 +66,6 @@ const ServicesGlow = ({
       />
     </div>
   );
-}
+};
 
 export default ServicesGlow;

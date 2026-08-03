@@ -1,3 +1,7 @@
-export default function PageTransition({ children }) {
+interface Props {
+  children: React.ReactNode;
+}
+
+export default function PageTransition({ children }: Props) {
   return children
 }

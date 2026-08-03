@@ -1,7 +1,7 @@
 // src/scene/flightDynamics.ts
 // Velocity, damping, momentum, and micro-motion layer on top of flightPhysics.
 
-import { clamp, lerp } from "./helpers";
+import { clamp } from "./helpers";
 import { FLIGHT } from "./flightConfig";
 import type { FlightSample } from "./flightPhysics";
 
