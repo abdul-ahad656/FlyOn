@@ -7,7 +7,7 @@ import ServicesHeader from "./ServicesHeader";
 import FeaturedService from "./FeaturedService";
 import ServiceGrid from "./ServiceGrid";
 import ServicesDivider from "./divider/ServicesDivider";
-import ServiceCTA from "./ServiceCTA";
+import ServiceCTA from "./cta/ServiceCTA";
 
 import useServicesScene from "../../hooks/useServicesScene";
 
