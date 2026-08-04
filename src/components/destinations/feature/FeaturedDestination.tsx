@@ -1,39 +1,72 @@
-import featuredImage from "../../assets/destinations/maldives.jpeg";
+import { useRef } from "react";
 
+import FeaturedImage from "./FeaturedImage";
 import FeaturedOverlay from "./FeaturedOverlay";
 
+import useFeaturedDestination from "../../../hooks/useFeaturedDestination";
+
 const FeaturedDestination = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  const buttonRef = useRef<HTMLDivElement>(null);
+
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  const sweepRef = useRef<HTMLDivElement>(null);
+
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useFeaturedDestination({
+    sectionRef,
+    imageRef,
+    overlayRef,
+    headingRef,
+    descriptionRef,
+    statsRef,
+    buttonRef,
+    glowRef,
+    sweepRef,
+    cardRef
+  });
+
   return (
-    <section
-      className="
-        relative
-        mt-20
-        overflow-hidden
-        rounded-[42px]
-        border
-        border-white/60
-        bg-white
-        shadow-[0_50px_120px_rgba(15,23,42,.10)]
-      "
-    >
-      <div className="relative h-[720px] overflow-hidden">
-
-        <img
-          src={featuredImage}
-          alt="Maldives"
-          className="
-            h-full
-            w-full
-            object-cover
+    <section>
+      <div
+        ref={cardRef}
+        className="
+            relative
+            overflow-hidden
+            rounded-[42px]
             will-change-transform
-          "
-        />
+            [transform-style:preserve-3d]
+        "
+      >
+    
+      <FeaturedImage
+        imageRef={imageRef}
+        glowRef={glowRef}
+        sweepRef={sweepRef}
+      />
 
-        {/* Image Dark Overlay */}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/20 to-transparent" />
-
-        <FeaturedOverlay />
+      <FeaturedOverlay
+        overlayRef={overlayRef}
+        headingRef={headingRef}
+        descriptionRef={descriptionRef}
+        statsRef={statsRef}
+        buttonRef={buttonRef}
+      />
+      
+      
       </div>
     </section>
   );

@@ -24,3 +24,24 @@ export interface DestinationSceneRefs {
 
   ctaRef: React.RefObject<HTMLDivElement | null>;
 }
+
+export interface FeaturedDestinationRefs {
+  sectionRef: React.RefObject<HTMLDivElement | null>;
+
+  imageRef: React.RefObject<HTMLDivElement | null>;
+
+  overlayRef: React.RefObject<HTMLDivElement | null>;
+
+  headingRef: React.RefObject<HTMLHeadingElement | null>;
+
+  descriptionRef: React.RefObject<HTMLParagraphElement | null>;
+
+  statsRef: React.RefObject<HTMLDivElement | null>;
+
+  buttonRef: React.RefObject<HTMLDivElement | null>;
+
+  glowRef: React.RefObject<HTMLDivElement | null>;
+
+  sweepRef: React.RefObject<HTMLDivElement | null>;
+  cardRef: React.RefObject<HTMLDivElement | null>;
+}
