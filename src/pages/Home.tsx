@@ -3,7 +3,7 @@ import About from "../components/about/About";
 import { FlightDirector } from "../components/flight";
 import { FlightProvider } from "../context/FlightContext";
 import Services from "../components/services";
-import Destinations from "../components/destinations"
+import Destinations from "../components/destinations/Destinations"
 
 const Home = () => {
   return (

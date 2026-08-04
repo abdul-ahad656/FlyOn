@@ -1,7 +1,7 @@
 import FeaturedGlow from "./FeaturedGlow";
 import FeaturedParticles from "./FeaturedParticles";
 
-import featuredImage from "../../assets/destinations/maldives.jpeg";
+import featuredImage from "../../../assets/destinations/maldives.jpeg";
 
 interface Props {
   imageRef: React.RefObject<HTMLDivElement | null>;
