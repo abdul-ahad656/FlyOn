@@ -1,4 +1,5 @@
 import DestinationCard from "./DestinationCard";
+
 import { destinations } from "./data";
 
 const DestinationGrid = () => {

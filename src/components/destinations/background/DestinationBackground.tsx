@@ -1,3 +1,11 @@
+import DestinationGlow from "./DestinationGlow";
+import DestinationParticles from "./DestinationParticles";
+
+interface Props {
+  backgroundRef: React.RefObject<HTMLDivElement | null>;
+  glowRef: React.RefObject<HTMLDivElement | null>;
+}
+
 const DestinationBackground = ({
   backgroundRef,
   glowRef,
@@ -7,21 +15,9 @@ const DestinationBackground = ({
       ref={backgroundRef}
       className="absolute inset-0 overflow-hidden"
     >
-      <div
-        ref={glowRef}
-        className="
-          absolute
-          left-1/2
-          top-1/2
-          h-[650px]
-          w-[650px]
-          -translate-x-1/2
-          -translate-y-1/2
-          rounded-full
-          bg-primary/10
-          blur-[180px]
-        "
-      />
+      <DestinationGlow glowRef={glowRef} />
+
+      <DestinationParticles />
     </div>
   );
 };

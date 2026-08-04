@@ -1,12 +1,21 @@
-export interface Destination {
+export interface DestinationCardData {
   id: number;
+
+  featured: boolean;
+
   title: string;
+
   country: string;
+
   image: string;
+
   duration: string;
+
   rating: number;
+
   price: string;
-  featured?: boolean;
+
+  description: string;
 }
 
 export interface DestinationSceneRefs {
@@ -43,5 +52,20 @@ export interface FeaturedDestinationRefs {
   glowRef: React.RefObject<HTMLDivElement | null>;
 
   sweepRef: React.RefObject<HTMLDivElement | null>;
+
   cardRef: React.RefObject<HTMLDivElement | null>;
+}
+
+export interface DestinationCardRefs {
+  cardRef: React.RefObject<HTMLDivElement | null>;
+
+  imageRef: React.RefObject<HTMLDivElement | null>;
+
+  glowRef: React.RefObject<HTMLDivElement | null>;
+
+  contentRef: React.RefObject<HTMLDivElement | null>;
+
+  titleRef: React.RefObject<HTMLHeadingElement | null>;
+
+  buttonRef: React.RefObject<HTMLDivElement | null>;
 }
