@@ -2,10 +2,10 @@ export interface Destination {
   id: number;
   title: string;
   country: string;
-  duration: string;
-  price: string;
-  rating: number;
   image: string;
+  duration: string;
+  rating: number;
+  price: string;
   featured?: boolean;
 }
 

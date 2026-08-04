@@ -1,3 +1,10 @@
+import dubai from "../../assets/destinations/dubai.jpeg";
+import bali from "../../assets/destinations/bali.jpeg";
+import kyoto from "../../assets/destinations/kyoto.jpeg";
+import swiss from "../../assets/destinations/swiss.jpeg";
+import santorini from "../../assets/destinations/santorini.jpeg";
+import maldives from "../../assets/destinations/maldives.jpeg";
+
 export const destinations = [
   {
     id: 1,
@@ -6,7 +13,7 @@ export const destinations = [
     duration: "7 Days",
     price: "$4,900",
     rating: 4.9,
-    image: "/images/maldives.jpg",
+    image: maldives,
     featured: true,
   },
   {
@@ -16,7 +23,7 @@ export const destinations = [
     duration: "5 Days",
     price: "$2,700",
     rating: 4.8,
-    image: "/images/dubai.jpg",
+    image: dubai,
   },
   {
     id: 3,
@@ -25,7 +32,7 @@ export const destinations = [
     duration: "8 Days",
     price: "$3,900",
     rating: 4.9,
-    image: "/images/kyoto.jpg",
+    image: kyoto,
   },
   {
     id: 4,
@@ -34,7 +41,7 @@ export const destinations = [
     duration: "6 Days",
     price: "$2,600",
     rating: 4.8,
-    image: "/images/bali.jpg",
+    image: bali,
   },
   {
     id: 5,
@@ -43,7 +50,7 @@ export const destinations = [
     duration: "6 Days",
     price: "$3,500",
     rating: 4.9,
-    image: "/images/santorini.jpg",
+    image: santorini,
   },
   {
     id: 6,
@@ -52,6 +59,6 @@ export const destinations = [
     duration: "9 Days",
     price: "$5,800",
     rating: 5.0,
-    image: "/images/swiss.jpg",
+    image: swiss,
   },
 ];

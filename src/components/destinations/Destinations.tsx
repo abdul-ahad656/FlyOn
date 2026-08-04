@@ -4,7 +4,7 @@ import Container from "../common/Container";
 
 import DestinationBackground from "./background/DestinationBackground";
 import DestinationsHeader from "./DestinationsHeader";
-import FeaturedDestination from "./FeaturedDestination";
+import FeaturedDestination from "./feature/FeaturedDestination";
 import DestinationGrid from "./DestinationGrid";
 import DestinationCTA from "./DestinationCTA";
 
