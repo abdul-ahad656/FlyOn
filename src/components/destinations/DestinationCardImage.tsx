@@ -8,6 +8,12 @@ interface Props {
   glowRef: React.RefObject<HTMLDivElement | null>;
 
   spotlightRef: React.RefObject<HTMLDivElement | null>;
+
+  badgeRef: React.RefObject<HTMLDivElement | null>;
+
+  overlayRef: React.RefObject<HTMLDivElement | null>;
+
+  sweepRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const DestinationCardImage = ({
@@ -15,6 +21,9 @@ const DestinationCardImage = ({
   imageRef,
   glowRef,
   spotlightRef,
+  badgeRef,
+  overlayRef,
+  sweepRef,
 }: Props) => {
   return (
     <div
@@ -40,8 +49,8 @@ const DestinationCardImage = ({
           rounded-full
           bg-primary/20
           blur-[110px]
-          will-change-transform
           pointer-events-none
+          will-change-transform
         "
       />
 
@@ -90,9 +99,10 @@ const DestinationCardImage = ({
           "
         />
 
-        {/* Cinematic Gradient */}
+        {/* Animated Cinematic Gradient */}
 
         <div
+          ref={overlayRef}
           className="
             absolute
             inset-0
@@ -100,6 +110,7 @@ const DestinationCardImage = ({
             from-slate-950/80
             via-slate-900/20
             to-transparent
+            will-change-transform
           "
         />
 
@@ -113,7 +124,7 @@ const DestinationCardImage = ({
           "
         />
 
-        {/* Noise Texture */}
+        {/* Noise */}
 
         <div
           className="
@@ -126,31 +137,30 @@ const DestinationCardImage = ({
           "
         />
 
-        {/* Luxury Sweep */}
+        {/* GSAP Sweep */}
 
         <div
+          ref={sweepRef}
           className="
             absolute
             inset-y-0
             -left-1/2
-            w-36
+            w-40
             rotate-12
             bg-gradient-to-r
             from-transparent
             via-white/35
             to-transparent
             blur-xl
+            pointer-events-none
             will-change-transform
-            transition-transform
-            duration-[2200ms]
-            ease-out
-            group-hover:translate-x-[500px]
           "
         />
 
-        {/* Badge */}
+        {/* Floating Badge */}
 
         <div
+          ref={badgeRef}
           className="
             absolute
             left-5
@@ -162,6 +172,7 @@ const DestinationCardImage = ({
             px-4
             py-2
             backdrop-blur-xl
+            will-change-transform
           "
         >
           <span
@@ -170,8 +181,8 @@ const DestinationCardImage = ({
               uppercase
               tracking-[2px]
               text-white
-            "
-          >
+              "
+            >
             Luxury Escape
           </span>
         </div>

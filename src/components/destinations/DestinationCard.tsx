@@ -22,6 +22,12 @@ const DestinationCard = ({
 
   const spotlightRef = useRef<HTMLDivElement>(null);
 
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  const sweepRef = useRef<HTMLDivElement>(null);
+
+  const badgeRef = useRef<HTMLDivElement>(null);
+
   const contentRef = useRef<HTMLDivElement>(null);
 
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -33,6 +39,9 @@ const DestinationCard = ({
     imageRef,
     glowRef,
     spotlightRef,
+    overlayRef,
+    sweepRef,
+    badgeRef,
     contentRef,
     titleRef,
     buttonRef,
@@ -61,6 +70,9 @@ const DestinationCard = ({
         imageRef={imageRef}
         glowRef={glowRef}
         spotlightRef={spotlightRef}
+        overlayRef={overlayRef}
+        sweepRef={sweepRef}
+        badgeRef={badgeRef}
       />
 
       <DestinationCardContent

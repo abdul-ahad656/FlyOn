@@ -65,6 +65,12 @@ export interface DestinationCardRefs {
 
   spotlightRef: React.RefObject<HTMLDivElement | null>;
 
+  overlayRef: React.RefObject<HTMLDivElement | null>;
+
+  sweepRef: React.RefObject<HTMLDivElement | null>;
+
+  badgeRef: React.RefObject<HTMLDivElement | null>;
+
   contentRef: React.RefObject<HTMLDivElement | null>;
 
   titleRef: React.RefObject<HTMLHeadingElement | null>;
