@@ -6,12 +6,15 @@ interface Props {
   imageRef: React.RefObject<HTMLDivElement | null>;
 
   glowRef: React.RefObject<HTMLDivElement | null>;
+
+  spotlightRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const DestinationCardImage = ({
   destination,
   imageRef,
   glowRef,
+  spotlightRef,
 }: Props) => {
   return (
     <div
@@ -21,7 +24,7 @@ const DestinationCardImage = ({
         overflow-hidden
       "
     >
-      {/* Glow */}
+      {/* Ambient Glow */}
 
       <div
         ref={glowRef}
@@ -30,13 +33,34 @@ const DestinationCardImage = ({
           left-1/2
           top-1/2
           z-10
-          h-56
-          w-56
+          h-60
+          w-60
           -translate-x-1/2
           -translate-y-1/2
           rounded-full
           bg-primary/20
-          blur-[90px]
+          blur-[110px]
+          will-change-transform
+          pointer-events-none
+        "
+      />
+
+      {/* Cursor Spotlight */}
+
+      <div
+        ref={spotlightRef}
+        className="
+          absolute
+          left-0
+          top-0
+          z-20
+          h-64
+          w-64
+          rounded-full
+          bg-white/20
+          opacity-0
+          blur-3xl
+          pointer-events-none
           will-change-transform
         "
       />
@@ -62,10 +86,11 @@ const DestinationCardImage = ({
             object-cover
             select-none
             pointer-events-none
+            will-change-transform
           "
         />
 
-        {/* Luxury Gradient */}
+        {/* Cinematic Gradient */}
 
         <div
           className="
@@ -73,8 +98,18 @@ const DestinationCardImage = ({
             inset-0
             bg-gradient-to-t
             from-slate-950/80
-            via-slate-900/15
+            via-slate-900/20
             to-transparent
+          "
+        />
+
+        {/* Soft Vignette */}
+
+        <div
+          className="
+            absolute
+            inset-0
+            bg-black/10
           "
         />
 
@@ -91,28 +126,29 @@ const DestinationCardImage = ({
           "
         />
 
-        {/* Light Sweep */}
+        {/* Luxury Sweep */}
 
         <div
           className="
             absolute
             inset-y-0
             -left-1/2
-            w-32
+            w-36
             rotate-12
             bg-gradient-to-r
             from-transparent
             via-white/35
             to-transparent
             blur-xl
+            will-change-transform
             transition-transform
-            duration-[1800ms]
+            duration-[2200ms]
             ease-out
-            group-hover:translate-x-[420px]
+            group-hover:translate-x-[500px]
           "
         />
 
-        {/* Featured Badge */}
+        {/* Badge */}
 
         <div
           className="
@@ -140,7 +176,7 @@ const DestinationCardImage = ({
           </span>
         </div>
 
-        {/* Bottom Destination Info */}
+        {/* Destination */}
 
         <div
           className="

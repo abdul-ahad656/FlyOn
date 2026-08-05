@@ -63,6 +63,8 @@ export interface DestinationCardRefs {
 
   glowRef: React.RefObject<HTMLDivElement | null>;
 
+  spotlightRef: React.RefObject<HTMLDivElement | null>;
+
   contentRef: React.RefObject<HTMLDivElement | null>;
 
   titleRef: React.RefObject<HTMLHeadingElement | null>;
