@@ -12,6 +12,9 @@ const useDestinationCard = ({
   imageRef,
   glowRef,
   spotlightRef,
+  overlayRef,
+  sweepRef,
+  badgeRef,
   contentRef,
   titleRef,
   buttonRef,
@@ -105,6 +108,68 @@ const useDestinationCard = ({
       });
 
       //--------------------------------------
+      // Ken Burns
+      //--------------------------------------
+
+      gsap.to(imageRef.current, {
+        scale: 1.12,
+        duration: 22,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      gsap.to(imageRef.current, {
+        x: 12,
+        y: -8,
+        duration: 18,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      //--------------------------------------
+      // Floating Badge
+      //--------------------------------------
+
+      gsap.to(badgeRef.current, {
+        y: -8,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      //--------------------------------------
+      // Overlay Breathing
+      //--------------------------------------
+
+      gsap.to(overlayRef.current, {
+        opacity: 0.92,
+        scale: 1.04,
+        duration: 8,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      //--------------------------------------
+      // Luxury Sweep
+      //--------------------------------------
+
+      gsap.set(sweepRef.current, {
+        xPercent: -180,
+      });
+
+      gsap.to(sweepRef.current, {
+        xPercent: 220,
+        duration: 2.2,
+        repeat: -1,
+        repeatDelay: 7,
+        ease: "power1.inOut",
+      });
+
+      //--------------------------------------
       // Premium Hover Physics
       //--------------------------------------
 
@@ -143,11 +208,6 @@ const useDestinationCard = ({
           ease: "power2.out",
         });
 
-        gsap.to(imageRef.current, {
-          scale: 1.05,
-          duration: 0.45,
-        });
-
         gsap.to(spotlightRef.current, {
           opacity: 0.8,
           duration: 0.35,
@@ -165,31 +225,15 @@ const useDestinationCard = ({
           ease: "power2.out",
         });
 
-        gsap.to(imageRef.current, {
-          scale: 1,
-          duration: 0.45,
-        });
-
         gsap.to(spotlightRef.current, {
           opacity: 0,
           duration: 0.45,
         });
       };
 
-      card.addEventListener(
-        "mousemove",
-        handleMove
-      );
-
-      card.addEventListener(
-        "mouseenter",
-        handleEnter
-      );
-
-      card.addEventListener(
-        "mouseleave",
-        handleLeave
-      );
+      card.addEventListener("mousemove", handleMove);
+      card.addEventListener("mouseenter", handleEnter);
+      card.addEventListener("mouseleave", handleLeave);
 
       //--------------------------------------
       // Render Loop
@@ -197,35 +241,21 @@ const useDestinationCard = ({
 
       const tick = () => {
         state.rotationX +=
-          (state.targetRotationX -
-            state.rotationX) *
-          0.08;
+          (state.targetRotationX - state.rotationX) * 0.08;
 
         state.rotationY +=
-          (state.targetRotationY -
-            state.rotationY) *
-          0.08;
+          (state.targetRotationY - state.rotationY) * 0.08;
 
         state.glowX +=
-          (state.targetGlowX -
-            state.glowX) *
-          0.12;
+          (state.targetGlowX - state.glowX) * 0.12;
 
         state.glowY +=
-          (state.targetGlowY -
-            state.glowY) *
-          0.12;
+          (state.targetGlowY - state.glowY) * 0.12;
 
         gsap.set(card, {
           rotateX: state.rotationX,
           rotateY: state.rotationY,
           transformPerspective: 1600,
-        });
-
-        gsap.set(imageRef.current, {
-          rotateX: state.rotationX * 0.18,
-          rotateY: state.rotationY * 0.18,
-          z: 30,
         });
 
         gsap.set(contentRef.current, {
@@ -254,20 +284,9 @@ const useDestinationCard = ({
       return () => {
         gsap.ticker.remove(tick);
 
-        card.removeEventListener(
-          "mousemove",
-          handleMove
-        );
-
-        card.removeEventListener(
-          "mouseenter",
-          handleEnter
-        );
-
-        card.removeEventListener(
-          "mouseleave",
-          handleLeave
-        );
+        card.removeEventListener("mousemove", handleMove);
+        card.removeEventListener("mouseenter", handleEnter);
+        card.removeEventListener("mouseleave", handleLeave);
       };
     }, card);
 
@@ -277,6 +296,9 @@ const useDestinationCard = ({
     imageRef,
     glowRef,
     spotlightRef,
+    overlayRef,
+    sweepRef,
+    badgeRef,
     contentRef,
     titleRef,
     buttonRef,
