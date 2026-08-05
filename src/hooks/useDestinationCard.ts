@@ -11,6 +11,7 @@ const useDestinationCard = ({
   cardRef,
   imageRef,
   glowRef,
+  spotlightRef,
   contentRef,
   titleRef,
   buttonRef,
@@ -48,7 +49,7 @@ const useDestinationCard = ({
       );
 
       //--------------------------------------
-      // Reveal
+      // Reveal Animation
       //--------------------------------------
 
       gsap.timeline({
@@ -91,7 +92,7 @@ const useDestinationCard = ({
         );
 
       //--------------------------------------
-      // Glow Breathing
+      // Ambient Glow
       //--------------------------------------
 
       gsap.to(glowRef.current, {
@@ -104,43 +105,75 @@ const useDestinationCard = ({
       });
 
       //--------------------------------------
-      // Hover Physics
+      // Premium Hover Physics
       //--------------------------------------
 
-      const rotation = {
-        x: 0,
-        y: 0,
-      };
+      const state = {
+        rotationX: 0,
+        rotationY: 0,
 
-      const target = {
-        x: 0,
-        y: 0,
-      };
+        targetRotationX: 0,
+        targetRotationY: 0,
 
-      const mouse = {
-        x: 0,
-        y: 0,
+        glowX: 0,
+        glowY: 0,
+
+        targetGlowX: 0,
+        targetGlowY: 0,
       };
 
       const handleMove = (e: MouseEvent) => {
         const rect = card.getBoundingClientRect();
 
-        const px =
-          (e.clientX - rect.left) / rect.width;
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
 
-        const py =
-          (e.clientY - rect.top) / rect.height;
+        state.targetRotationY = (x - 0.5) * 10;
+        state.targetRotationX = (0.5 - y) * 10;
 
-        target.y = (px - 0.5) * 8;
-        target.x = (0.5 - py) * 8;
-
-        mouse.x = e.clientX - rect.left;
-        mouse.y = e.clientY - rect.top;
+        state.targetGlowX = e.clientX - rect.left;
+        state.targetGlowY = e.clientY - rect.top;
       };
 
-      const reset = () => {
-        target.x = 0;
-        target.y = 0;
+      const handleEnter = () => {
+        gsap.to(card, {
+          boxShadow:
+            "0 60px 120px rgba(15,23,42,.18)",
+          duration: 0.45,
+          ease: "power2.out",
+        });
+
+        gsap.to(imageRef.current, {
+          scale: 1.05,
+          duration: 0.45,
+        });
+
+        gsap.to(spotlightRef.current, {
+          opacity: 0.8,
+          duration: 0.35,
+        });
+      };
+
+      const handleLeave = () => {
+        state.targetRotationX = 0;
+        state.targetRotationY = 0;
+
+        gsap.to(card, {
+          boxShadow:
+            "0 25px 70px rgba(15,23,42,.08)",
+          duration: 0.45,
+          ease: "power2.out",
+        });
+
+        gsap.to(imageRef.current, {
+          scale: 1,
+          duration: 0.45,
+        });
+
+        gsap.to(spotlightRef.current, {
+          opacity: 0,
+          duration: 0.45,
+        });
       };
 
       card.addEventListener(
@@ -149,65 +182,66 @@ const useDestinationCard = ({
       );
 
       card.addEventListener(
-        "mouseleave",
-        reset
+        "mouseenter",
+        handleEnter
       );
 
-      //--------------------------------------
-      // Hover Shadow
-      //--------------------------------------
-
-      card.addEventListener("mouseenter", () => {
-        gsap.to(card, {
-          boxShadow:
-            "0 40px 90px rgba(15,23,42,.18)",
-          duration: 0.4,
-        });
-
-        gsap.to(imageRef.current, {
-          scale: 1.08,
-          duration: 0.5,
-        });
-      });
-
-      card.addEventListener("mouseleave", () => {
-        gsap.to(card, {
-          boxShadow:
-            "0 25px 70px rgba(15,23,42,.08)",
-          duration: 0.4,
-        });
-
-        gsap.to(imageRef.current, {
-          scale: 1,
-          duration: 0.5,
-        });
-      });
+      card.addEventListener(
+        "mouseleave",
+        handleLeave
+      );
 
       //--------------------------------------
       // Render Loop
       //--------------------------------------
 
       const tick = () => {
-        rotation.x +=
-          (target.x - rotation.x) * 0.08;
+        state.rotationX +=
+          (state.targetRotationX -
+            state.rotationX) *
+          0.08;
 
-        rotation.y +=
-          (target.y - rotation.y) * 0.08;
+        state.rotationY +=
+          (state.targetRotationY -
+            state.rotationY) *
+          0.08;
+
+        state.glowX +=
+          (state.targetGlowX -
+            state.glowX) *
+          0.12;
+
+        state.glowY +=
+          (state.targetGlowY -
+            state.glowY) *
+          0.12;
 
         gsap.set(card, {
-          rotateX: rotation.x,
-          rotateY: rotation.y,
-          transformPerspective: 1200,
+          rotateX: state.rotationX,
+          rotateY: state.rotationY,
+          transformPerspective: 1600,
         });
 
         gsap.set(imageRef.current, {
-          rotateX: rotation.x * 0.15,
-          rotateY: rotation.y * 0.15,
+          rotateX: state.rotationX * 0.18,
+          rotateY: state.rotationY * 0.18,
+          z: 30,
+        });
+
+        gsap.set(contentRef.current, {
+          rotateX: state.rotationX * 0.45,
+          rotateY: state.rotationY * 0.45,
+          z: 50,
         });
 
         gsap.set(glowRef.current, {
-          x: (mouse.x - 150) * 0.08,
-          y: (mouse.y - 100) * 0.08,
+          x: (state.glowX - 150) * 0.12,
+          y: (state.glowY - 120) * 0.12,
+        });
+
+        gsap.set(spotlightRef.current, {
+          x: state.glowX - 120,
+          y: state.glowY - 120,
         });
       };
 
@@ -226,8 +260,13 @@ const useDestinationCard = ({
         );
 
         card.removeEventListener(
+          "mouseenter",
+          handleEnter
+        );
+
+        card.removeEventListener(
           "mouseleave",
-          reset
+          handleLeave
         );
       };
     }, card);
@@ -237,6 +276,7 @@ const useDestinationCard = ({
     cardRef,
     imageRef,
     glowRef,
+    spotlightRef,
     contentRef,
     titleRef,
     buttonRef,
