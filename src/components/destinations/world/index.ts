@@ -17,3 +17,14 @@ export { default as Stars } from './particles/Stars';
 // Cards
 export { default as DestinationCard3D } from './cards/DestinationCard3D';
 export { default as CardMaterial } from './cards/CardMaterial';
+
+
+const World = () => {
+  return (
+    <div>
+      <h1>this is world</h1>
+    </div>
+  );
+}
+
+export default World;
