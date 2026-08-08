@@ -7,6 +7,7 @@ import DestinationsHeader from "./DestinationsHeader";
 import FeaturedDestination from "./feature/FeaturedDestination";
 import DestinationGrid from "./DestinationGrid";
 import DestinationCTA from "./DestinationCTA";
+import { DestinationScene } from "./world";
 
 import useDestinationScene from "../../hooks/useDestinationScene";
 
@@ -45,6 +46,8 @@ const Destinations = () => {
         py-40
       "
     >
+      <DestinationScene />
+      
       <DestinationBackground
         backgroundRef={backgroundRef}
         glowRef={glowRef}
