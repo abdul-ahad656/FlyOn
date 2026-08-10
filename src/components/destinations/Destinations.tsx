@@ -7,7 +7,6 @@ import DestinationsHeader from "./DestinationsHeader";
 import FeaturedDestination from "./feature/FeaturedDestination";
 import DestinationGrid from "./DestinationGrid";
 import DestinationCTA from "./DestinationCTA";
-import { DestinationScene } from "./world";
 
 import useDestinationScene from "../../hooks/useDestinationScene";
 
@@ -37,71 +36,38 @@ const Destinations = () => {
       ref={sectionRef}
       className="
         relative
-        isolate
         overflow-hidden
         bg-slate-950
         py-32
         md:py-40
       "
     >
-      {/* =========================================
-          CINEMATIC BACKGROUND
-      ========================================== */}
+      {/* Cinematic Environment */}
 
       <DestinationBackground
         backgroundRef={backgroundRef}
         glowRef={glowRef}
       />
 
-      {/* =========================================
-          DESTINATION CONTENT
-      ========================================== */}
+      {/* Content */}
 
       <Container className="relative z-10">
-        {/* Header */}
-
         <div ref={headerRef}>
           <DestinationsHeader />
         </div>
-
-        {/* Featured Destination */}
 
         <div ref={featuredRef}>
           <FeaturedDestination />
         </div>
 
-        {/* Destination Gallery */}
-
         <div ref={gridRef}>
           <DestinationGrid />
         </div>
-
-        {/* CTA */}
 
         <div ref={ctaRef}>
           <DestinationCTA />
         </div>
       </Container>
-
-      {/* =========================================
-          3D WORLD LAYER
-
-          Kept separate from normal DOM content so
-          the Three.js scene can later become the
-          cinematic transition layer.
-      ========================================== */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-[1]
-        "
-        aria-hidden="true"
-      >
-        <DestinationScene />
-      </div>
     </section>
   );
 };

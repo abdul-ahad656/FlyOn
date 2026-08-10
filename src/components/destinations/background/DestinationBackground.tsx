@@ -3,7 +3,6 @@ import DestinationParticles from "./DestinationParticles";
 
 interface Props {
   backgroundRef: React.RefObject<HTMLDivElement | null>;
-
   glowRef: React.RefObject<HTMLDivElement | null>;
 }
 
@@ -18,41 +17,38 @@ const DestinationBackground = ({
         pointer-events-none
         absolute
         inset-0
-        -z-0
         overflow-hidden
       "
-      aria-hidden="true"
     >
-      {/* =========================================
-          BASE ATMOSPHERE
-      ========================================== */}
+      {/* Deep atmospheric background */}
 
       <div
         className="
           absolute
           inset-0
-          bg-gradient-to-b
-          from-slate-950
-          via-slate-950
-          to-slate-900
+          bg-[radial-gradient(circle_at_50%_15%,rgba(56,189,248,0.08),transparent_35%)]
         "
       />
 
-      {/* =========================================
-          BLUE AMBIENT LIGHT
-      ========================================== */}
+      {/* Secondary atmosphere */}
+
+      <div
+        className="
+          absolute
+          inset-0
+          bg-[radial-gradient(circle_at_85%_70%,rgba(34,211,238,0.05),transparent_30%)]
+        "
+      />
+
+      {/* Glows */}
 
       <DestinationGlow glowRef={glowRef} />
 
-      {/* =========================================
-          PARTICLE FIELD
-      ========================================== */}
+      {/* Particles */}
 
       <DestinationParticles />
 
-      {/* =========================================
-          CINEMATIC VIGNETTE
-      ========================================== */}
+      {/* Subtle vignette */}
 
       <div
         className="
@@ -60,47 +56,37 @@ const DestinationBackground = ({
           inset-0
           bg-[radial-gradient(
             ellipse_at_center,
-            transparent_20%,
-            rgba(2,6,23,0.35)_65%,
-            rgba(2,6,23,0.85)_100%
+            transparent_35%,
+            rgba(2,6,23,0.28)_100%
           )]
         "
       />
 
-      {/* =========================================
-          SUBTLE TOP LIGHT
-      ========================================== */}
+      {/* Top atmospheric fade */}
 
       <div
         className="
           absolute
-          left-1/2
+          inset-x-0
           top-0
-          h-[500px]
-          w-[900px]
-          -translate-x-1/2
-          rounded-full
-          bg-primary/[0.06]
-          blur-[140px]
+          h-40
+          bg-gradient-to-b
+          from-slate-950
+          to-transparent
         "
       />
 
-      {/* =========================================
-          VERY SUBTLE GRAIN
-      ========================================== */}
+      {/* Bottom atmospheric fade */}
 
       <div
         className="
           absolute
-          inset-0
-          opacity-[0.025]
-          mix-blend-screen
-          bg-[radial-gradient(
-            circle_at_center,
-            white_1px,
-            transparent_1px
-          )]
-          [background-size:24px_24px]
+          inset-x-0
+          bottom-0
+          h-40
+          bg-gradient-to-t
+          from-slate-950
+          to-transparent
         "
       />
     </div>
