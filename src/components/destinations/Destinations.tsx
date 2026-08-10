@@ -36,13 +36,14 @@ const Destinations = () => {
       ref={sectionRef}
       className="
         relative
+        isolate
         overflow-hidden
-        bg-slate-950
         py-32
         md:py-40
+        lg:py-48
       "
     >
-      {/* Cinematic Environment */}
+      {/* Cinematic background */}
 
       <DestinationBackground
         backgroundRef={backgroundRef}

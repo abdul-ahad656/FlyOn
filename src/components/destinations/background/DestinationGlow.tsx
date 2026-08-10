@@ -12,34 +12,34 @@ const DestinationGlow = ({ glowRef }: Props) => {
         className="
           absolute
           left-1/2
-          top-[38%]
-          h-[650px]
-          w-[650px]
+          top-[35%]
+          h-[700px]
+          w-[700px]
           -translate-x-1/2
           -translate-y-1/2
           rounded-full
-          bg-sky-400/[0.07]
+          bg-primary/[0.08]
           blur-[180px]
           will-change-transform
         "
       />
 
-      {/* Upper-left glow */}
+      {/* Upper left light */}
 
       <div
         className="
           absolute
-          left-[-8%]
-          top-[18%]
+          left-[-5%]
+          top-[12%]
           h-[320px]
           w-[320px]
           rounded-full
-          bg-blue-500/[0.06]
-          blur-[140px]
+          bg-sky-300/[0.08]
+          blur-[130px]
         "
       />
 
-      {/* Right atmospheric glow */}
+      {/* Right light */}
 
       <div
         className="
@@ -49,39 +49,24 @@ const DestinationGlow = ({ glowRef }: Props) => {
           h-[360px]
           w-[360px]
           rounded-full
-          bg-cyan-400/[0.055]
-          blur-[150px]
+          bg-cyan-300/[0.07]
+          blur-[140px]
         "
       />
 
-      {/* Lower glow */}
+      {/* Lower blue atmosphere */}
 
       <div
         className="
           absolute
-          bottom-[-5%]
-          left-[30%]
-          h-[300px]
-          w-[300px]
-          rounded-full
-          bg-indigo-500/[0.045]
-          blur-[150px]
-        "
-      />
-
-      {/* Tiny light source */}
-
-      <div
-        className="
-          absolute
-          left-[50%]
-          top-[22%]
-          h-2
-          w-2
+          bottom-[8%]
+          left-1/2
+          h-[280px]
+          w-[500px]
           -translate-x-1/2
           rounded-full
-          bg-sky-300/30
-          blur-[2px]
+          bg-blue-300/[0.05]
+          blur-[150px]
         "
       />
     </>

@@ -17,76 +17,66 @@ const DestinationBackground = ({
         pointer-events-none
         absolute
         inset-0
+        -z-10
         overflow-hidden
       "
     >
-      {/* Deep atmospheric background */}
+      {/* Base atmosphere */}
 
       <div
         className="
           absolute
           inset-0
-          bg-[radial-gradient(circle_at_50%_15%,rgba(56,189,248,0.08),transparent_35%)]
+          bg-gradient-to-b
+          from-slate-50
+          via-white
+          to-slate-50
         "
       />
 
-      {/* Secondary atmosphere */}
-
-      <div
-        className="
-          absolute
-          inset-0
-          bg-[radial-gradient(circle_at_85%_70%,rgba(34,211,238,0.05),transparent_30%)]
-        "
-      />
-
-      {/* Glows */}
+      {/* Main ambient glow */}
 
       <DestinationGlow glowRef={glowRef} />
 
-      {/* Particles */}
+      {/* Floating particles */}
 
       <DestinationParticles />
 
-      {/* Subtle vignette */}
-
-      <div
-        className="
-          absolute
-          inset-0
-          bg-[radial-gradient(
-            ellipse_at_center,
-            transparent_35%,
-            rgba(2,6,23,0.28)_100%
-          )]
-        "
-      />
-
-      {/* Top atmospheric fade */}
+      {/* Top cinematic fade */}
 
       <div
         className="
           absolute
           inset-x-0
           top-0
-          h-40
+          h-48
           bg-gradient-to-b
-          from-slate-950
+          from-white
           to-transparent
         "
       />
 
-      {/* Bottom atmospheric fade */}
+      {/* Bottom cinematic fade */}
 
       <div
         className="
           absolute
           inset-x-0
           bottom-0
-          h-40
+          h-48
           bg-gradient-to-t
-          from-slate-950
+          from-slate-50
           to-transparent
+        "
+      />
+
+      {/* Very subtle vignette */}
+
+      <div
+        className="
+          absolute
+          inset-0
+          bg-[radial-gradient(circle_at_center,transparent_30%,rgba(15,23,42,0.035)_100%)]
         "
       />
     </div>
