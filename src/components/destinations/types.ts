@@ -1,3 +1,15 @@
+export interface DestinationWorldTransform {
+  x: number;
+  y: number;
+  z: number;
+
+  rotateX: number;
+  rotateY: number;
+  rotateZ: number;
+
+  scale: number;
+}
+
 export interface DestinationCardData {
   id: number;
 
@@ -16,6 +28,8 @@ export interface DestinationCardData {
   price: string;
 
   description: string;
+
+  world: DestinationWorldTransform;
 }
 
 export interface DestinationSceneRefs {
