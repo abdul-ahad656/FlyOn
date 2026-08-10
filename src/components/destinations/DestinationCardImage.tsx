@@ -1,248 +1,3 @@
-// import type { DestinationCardData } from "./types";
-
-// interface Props {
-//   destination: DestinationCardData;
-
-//   imageRef: React.RefObject<HTMLDivElement | null>;
-
-//   glowRef: React.RefObject<HTMLDivElement | null>;
-
-//   spotlightRef: React.RefObject<HTMLDivElement | null>;
-
-//   badgeRef: React.RefObject<HTMLDivElement | null>;
-
-//   overlayRef: React.RefObject<HTMLDivElement | null>;
-
-//   sweepRef: React.RefObject<HTMLDivElement | null>;
-// }
-
-// const DestinationCardImage = ({
-//   destination,
-//   imageRef,
-//   glowRef,
-//   spotlightRef,
-//   badgeRef,
-//   overlayRef,
-//   sweepRef,
-// }: Props) => {
-//   return (
-//     <div
-//       className="
-//         relative
-//         h-72
-//         overflow-hidden
-//       "
-//     >
-//       {/* Ambient Glow */}
-
-//       <div
-//         ref={glowRef}
-//         className="
-//           absolute
-//           left-1/2
-//           top-1/2
-//           z-10
-//           h-60
-//           w-60
-//           -translate-x-1/2
-//           -translate-y-1/2
-//           rounded-full
-//           bg-primary/20
-//           blur-[110px]
-//           pointer-events-none
-//           will-change-transform
-//         "
-//       />
-
-//       {/* Cursor Spotlight */}
-
-//       <div
-//         ref={spotlightRef}
-//         className="
-//           absolute
-//           left-0
-//           top-0
-//           z-20
-//           h-64
-//           w-64
-//           rounded-full
-//           bg-white/20
-//           opacity-0
-//           blur-3xl
-//           pointer-events-none
-//           will-change-transform
-//         "
-//       />
-
-//       {/* Image */}
-
-//       <div
-//         ref={imageRef}
-//         className="
-//           relative
-//           h-full
-//           overflow-hidden
-//           will-change-transform
-//         "
-//       >
-//         <img
-//           src={destination.image}
-//           alt={destination.title}
-//           draggable={false}
-//           className="
-//             h-full
-//             w-full
-//             object-cover
-//             select-none
-//             pointer-events-none
-//             will-change-transform
-//           "
-//         />
-
-//         {/* Animated Cinematic Gradient */}
-
-//         <div
-//           ref={overlayRef}
-//           className="
-//             absolute
-//             inset-0
-//             bg-gradient-to-t
-//             from-slate-950/80
-//             via-slate-900/20
-//             to-transparent
-//             will-change-transform
-//           "
-//         />
-
-//         {/* Soft Vignette */}
-
-//         <div
-//           className="
-//             absolute
-//             inset-0
-//             bg-black/10
-//           "
-//         />
-
-//         {/* Noise */}
-
-//         <div
-//           className="
-//             absolute
-//             inset-0
-//             opacity-[0.03]
-//             mix-blend-overlay
-//             bg-[radial-gradient(circle_at_center,white_1px,transparent_1px)]
-//             [background-size:22px_22px]
-//           "
-//         />
-
-//         {/* GSAP Sweep */}
-
-//         <div
-//           ref={sweepRef}
-//           className="
-//             absolute
-//             inset-y-0
-//             -left-1/2
-//             w-40
-//             rotate-12
-//             bg-gradient-to-r
-//             from-transparent
-//             via-white/35
-//             to-transparent
-//             blur-xl
-//             pointer-events-none
-//             will-change-transform
-//           "
-//         />
-
-//         {/* Floating Badge */}
-
-//         <div
-//           ref={badgeRef}
-//           className="
-//             absolute
-//             left-5
-//             top-5
-//             rounded-full
-//             border
-//             border-white/20
-//             bg-white/10
-//             px-4
-//             py-2
-//             backdrop-blur-xl
-//             will-change-transform
-//           "
-//         >
-//           <span
-//             className="
-//               text-xs
-//               uppercase
-//               tracking-[2px]
-//               text-white
-//               "
-//             >
-//             Luxury Escape
-//           </span>
-//         </div>
-
-//         {/* Destination */}
-
-//         <div
-//           className="
-//             absolute
-//             bottom-5
-//             left-5
-//             right-5
-//             flex
-//             items-end
-//             justify-between
-//           "
-//         >
-//           <div>
-//             <h3
-//               className="
-//                 text-2xl
-//                 font-bold
-//                 text-white
-//               "
-//             >
-//               {destination.title}
-//             </h3>
-
-//             <p className="text-white/75">
-//               {destination.country}
-//             </p>
-//           </div>
-
-//           <div
-//             className="
-//               rounded-full
-//               bg-white/15
-//               px-4
-//               py-2
-//               backdrop-blur-xl
-//             "
-//           >
-//             <span
-//               className="
-//                 text-sm
-//                 font-medium
-//                 text-white
-//               "
-//             >
-//               {destination.duration}
-//             </span>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default DestinationCardImage;
-
 import type { DestinationCardData } from "./types";
 
 interface Props {
@@ -273,26 +28,66 @@ const DestinationCardImage = ({
   overlayRef,
   sweepRef,
 }: Props) => {
-  const imageHeight =
-    variant === "featured"
-      ? "h-[420px]"
-      : variant === "side"
-      ? "h-full min-h-[308px]"
-      : "h-[250px]";
+  // =========================================
+  // Variant Configuration
+  // =========================================
+
+  const imageHeight = {
+    featured: `
+      h-[420px]
+      sm:h-[460px]
+      lg:h-[500px]
+    `,
+
+    side: `
+      h-[220px]
+      sm:h-[240px]
+      lg:h-[250px]
+    `,
+
+    bottom: `
+      h-[230px]
+      sm:h-[250px]
+      lg:h-[270px]
+    `,
+  };
+
+  const titleSize = {
+    featured: `
+      text-3xl
+      lg:text-4xl
+    `,
+
+    side: `
+      text-2xl
+    `,
+
+    bottom: `
+      text-2xl
+      lg:text-[26px]
+    `,
+  };
+
+  // =========================================
+  // Render
+  // =========================================
 
   return (
     <div
       className={`
         relative
         overflow-hidden
-        ${imageHeight}
+        ${imageHeight[variant]}
       `}
     >
-      {/* Ambient Glow */}
+      {/* =====================================
+          AMBIENT GLOW
+      ===================================== */}
 
       <div
         ref={glowRef}
         className="
+          pointer-events-none
           absolute
           left-1/2
           top-1/2
@@ -304,38 +99,42 @@ const DestinationCardImage = ({
           rounded-full
           bg-primary/20
           blur-[110px]
-          pointer-events-none
           will-change-transform
         "
       />
 
-      {/* Cursor Spotlight */}
+      {/* =====================================
+          CURSOR SPOTLIGHT
+      ===================================== */}
 
       <div
         ref={spotlightRef}
         className="
+          pointer-events-none
           absolute
           left-0
           top-0
-          z-20
+          z-30
           h-64
           w-64
           rounded-full
           bg-white/20
           opacity-0
           blur-3xl
-          pointer-events-none
           will-change-transform
         "
       />
 
-      {/* Image */}
+      {/* =====================================
+          IMAGE
+      ===================================== */}
 
       <div
         ref={imageRef}
         className="
           relative
           h-full
+          w-full
           overflow-hidden
           will-change-transform
         "
@@ -344,68 +143,98 @@ const DestinationCardImage = ({
           src={destination.image}
           alt={destination.title}
           draggable={false}
+          loading={variant === "featured" ? "eager" : "lazy"}
           className="
             h-full
             w-full
-            object-cover
             select-none
+            object-cover
             pointer-events-none
             will-change-transform
           "
         />
 
-        {/* Gradient */}
+        {/* ===================================
+            CINEMATIC GRADIENT
+        =================================== */}
 
         <div
           ref={overlayRef}
           className="
+            pointer-events-none
             absolute
             inset-0
             bg-gradient-to-t
-            from-slate-950/80
-            via-slate-900/20
+            from-slate-950/85
+            via-slate-900/25
             to-transparent
-          "
-        />
-
-        {/* Vignette */}
-
-        <div className="absolute inset-0 bg-black/10" />
-
-        {/* Noise */}
-
-        <div
-          className="
-            absolute
-            inset-0
-            opacity-[0.03]
-            mix-blend-overlay
-            bg-[radial-gradient(circle_at_center,white_1px,transparent_1px)]
-            [background-size:22px_22px]
-          "
-        />
-
-        {/* Luxury Sweep */}
-
-        <div
-          ref={sweepRef}
-          className="
-            absolute
-            inset-y-0
-            -left-1/2
-            w-40
-            rotate-12
-            bg-gradient-to-r
-            from-transparent
-            via-white/35
-            to-transparent
-            blur-xl
-            pointer-events-none
             will-change-transform
           "
         />
 
-        {/* Badge */}
+        {/* ===================================
+            SOFT VIGNETTE
+        =================================== */}
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            bg-[radial-gradient(
+              circle_at_center,
+              transparent_35%,
+              rgba(2,6,23,0.18)_100%
+            )]
+          "
+        />
+
+        {/* ===================================
+            NOISE
+        =================================== */}
+
+        <div
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            opacity-[0.025]
+            mix-blend-overlay
+            bg-[radial-gradient(
+              circle_at_center,
+              white_1px,
+              transparent_1px
+            )]
+            [background-size:22px_22px]
+          "
+        />
+
+        {/* ===================================
+            LUXURY LIGHT SWEEP
+        =================================== */}
+
+        <div
+          ref={sweepRef}
+          className="
+            pointer-events-none
+            absolute
+            inset-y-0
+            -left-1/2
+            z-20
+            w-40
+            rotate-12
+            bg-gradient-to-r
+            from-transparent
+            via-white/30
+            to-transparent
+            blur-xl
+            will-change-transform
+          "
+        />
+
+        {/* ===================================
+            DESTINATION BADGE
+        =================================== */}
 
         <div
           ref={badgeRef}
@@ -413,6 +242,7 @@ const DestinationCardImage = ({
             absolute
             left-5
             top-5
+            z-20
             rounded-full
             border
             border-white/20
@@ -420,21 +250,26 @@ const DestinationCardImage = ({
             px-4
             py-2
             backdrop-blur-xl
+            will-change-transform
           "
         >
           <span
             className="
-              text-xs
+              text-[10px]
+              font-medium
               uppercase
-              tracking-[2px]
+              tracking-[2.5px]
               text-white
+              sm:text-xs
             "
           >
             Luxury Escape
           </span>
         </div>
 
-        {/* Bottom Info */}
+        {/* ===================================
+            DESTINATION INFORMATION
+        =================================== */}
 
         <div
           className="
@@ -442,31 +277,61 @@ const DestinationCardImage = ({
             bottom-5
             left-5
             right-5
+            z-20
             flex
             items-end
             justify-between
+            gap-4
           "
         >
-          <div>
-            <h3 className="text-2xl font-bold text-white">
+          {/* Destination */}
+
+          <div className="min-w-0">
+            <h3
+              className={`
+                font-heading
+                font-bold
+                leading-tight
+                text-white
+                ${titleSize[variant]}
+              `}
+            >
               {destination.title}
             </h3>
 
-            <p className="text-white/75">
+            <p
+              className="
+                mt-1
+                text-sm
+                text-white/70
+              "
+            >
               {destination.country}
             </p>
           </div>
 
+          {/* Duration */}
+
           <div
             className="
+              shrink-0
               rounded-full
-              bg-white/15
+              border
+              border-white/10
+              bg-white/10
               px-4
               py-2
               backdrop-blur-xl
             "
           >
-            <span className="text-sm font-medium text-white">
+            <span
+              className="
+                text-xs
+                font-medium
+                text-white
+                sm:text-sm
+              "
+            >
               {destination.duration}
             </span>
           </div>
