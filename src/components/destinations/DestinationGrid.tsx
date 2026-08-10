@@ -2,53 +2,44 @@ import DestinationCard from "./DestinationCard";
 import { destinations } from "./data";
 
 const DestinationGrid = () => {
-  const featured = destinations.find(
-    (destination) => destination.featured
+  const cards = destinations.filter(
+    (destination) => !destination.featured
   );
 
-  const sideCards = destinations.filter(
+  const sideCards = cards.filter(
     (destination) =>
-      !destination.featured &&
-      (destination.title === "Dubai" ||
-        destination.title === "Kyoto")
+      destination.title === "Dubai" ||
+      destination.title === "Kyoto"
   );
 
-  const bottomCards = destinations.filter(
+  const bottomCards = cards.filter(
     (destination) =>
-      !destination.featured &&
-      !["Dubai", "Kyoto"].includes(
-        destination.title
-      )
+      !["Dubai", "Kyoto"].includes(destination.title)
   );
 
   return (
-    <div className="mt-16 w-full">
-      {/* =========================================
-          PRIMARY EDITORIAL GRID
-      ========================================= */}
+    <div className="mt-16">
+      {/* --------------------------------
+          Editorial Upper Grid
+      -------------------------------- */}
 
       <div
         className="
           grid
           gap-6
-          lg:grid-cols-[1.8fr_1fr]
-          lg:items-stretch
+          lg:grid-cols-[1.65fr_1fr]
         "
       >
-        {/* -----------------------------------------
-            FEATURED DESTINATION
-        ----------------------------------------- */}
+        {/* Large Destination */}
 
-        {featured && (
+        {sideCards[0] && (
           <DestinationCard
-            destination={featured}
+            destination={sideCards[0]}
             variant="featured"
           />
         )}
 
-        {/* -----------------------------------------
-            RIGHT-SIDE DESTINATIONS
-        ----------------------------------------- */}
+        {/* Stacked Destinations */}
 
         <div
           className="
@@ -58,7 +49,7 @@ const DestinationGrid = () => {
             lg:grid-cols-1
           "
         >
-          {sideCards.map((destination) => (
+          {sideCards.slice(1).map((destination) => (
             <DestinationCard
               key={destination.id}
               destination={destination}
@@ -68,16 +59,16 @@ const DestinationGrid = () => {
         </div>
       </div>
 
-      {/* =========================================
-          BOTTOM EDITORIAL ROW
-      ========================================= */}
+      {/* --------------------------------
+          Lower Editorial Grid
+      -------------------------------- */}
 
       <div
         className="
           mt-6
           grid
           gap-6
-          sm:grid-cols-2
+          md:grid-cols-2
           xl:grid-cols-3
         "
       >
