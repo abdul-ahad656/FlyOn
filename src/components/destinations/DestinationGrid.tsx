@@ -1,66 +1,43 @@
-// import DestinationCard from "./DestinationCard";
-
-// import { destinations } from "./data";
-
-// const DestinationGrid = () => {
-//   const cards = destinations.filter(
-//     (item) => !item.featured
-//   );
-
-//   return (
-//     <div
-//       className="
-//         mt-16
-//         grid
-//         gap-8
-//         md:grid-cols-2
-//         xl:grid-cols-3
-//       "
-//     >
-//       {cards.map((destination) => (
-//         <DestinationCard
-//           key={destination.id}
-//           destination={destination}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default DestinationGrid;
-
 import DestinationCard from "./DestinationCard";
 import { destinations } from "./data";
 
 const DestinationGrid = () => {
   const featured = destinations.find(
-    (item) => item.featured
+    (destination) => destination.featured
   );
 
   const sideCards = destinations.filter(
-    (item) =>
-      !item.featured &&
-      (item.title === "Dubai" || item.title === "Kyoto")
+    (destination) =>
+      !destination.featured &&
+      (destination.title === "Dubai" ||
+        destination.title === "Kyoto")
   );
 
   const bottomCards = destinations.filter(
-    (item) =>
-      !item.featured &&
-      !["Dubai", "Kyoto"].includes(item.title)
+    (destination) =>
+      !destination.featured &&
+      !["Dubai", "Kyoto"].includes(
+        destination.title
+      )
   );
 
   return (
-    <div className="mt-20">
-      {/* Editorial Grid */}
+    <div className="mt-16 w-full">
+      {/* =========================================
+          PRIMARY EDITORIAL GRID
+      ========================================= */}
 
       <div
         className="
           grid
           gap-6
-          lg:grid-cols-[2fr_1fr]
+          lg:grid-cols-[1.8fr_1fr]
+          lg:items-stretch
         "
       >
-        {/* Featured */}
+        {/* -----------------------------------------
+            FEATURED DESTINATION
+        ----------------------------------------- */}
 
         {featured && (
           <DestinationCard
@@ -69,13 +46,16 @@ const DestinationGrid = () => {
           />
         )}
 
-        {/* Right Stack */}
+        {/* -----------------------------------------
+            RIGHT-SIDE DESTINATIONS
+        ----------------------------------------- */}
 
         <div
           className="
-            flex
-            flex-col
+            grid
             gap-6
+            sm:grid-cols-2
+            lg:grid-cols-1
           "
         >
           {sideCards.map((destination) => (
@@ -88,14 +68,17 @@ const DestinationGrid = () => {
         </div>
       </div>
 
-      {/* Bottom Row */}
+      {/* =========================================
+          BOTTOM EDITORIAL ROW
+      ========================================= */}
 
       <div
         className="
           mt-6
           grid
           gap-6
-          md:grid-cols-3
+          sm:grid-cols-2
+          xl:grid-cols-3
         "
       >
         {bottomCards.map((destination) => (
