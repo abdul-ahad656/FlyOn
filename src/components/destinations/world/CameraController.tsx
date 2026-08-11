@@ -7,11 +7,17 @@ const CameraController = () => {
   const { camera } = useThree();
 
   useEffect(() => {
-    camera.position.set(0, 1.5, 8);
+    camera.position.set(
+      0,
+      0,
+      6
+    );
 
-    camera.rotation.set(0, 0, 0);
-
-    camera.lookAt(0, 0, -20);
+    camera.lookAt(
+      0,
+      0,
+      -12
+    );
 
     camera.updateProjectionMatrix();
   }, [camera]);
