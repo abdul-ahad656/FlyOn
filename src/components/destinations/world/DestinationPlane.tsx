@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 import {
   RoundedBox,
@@ -37,36 +37,14 @@ const DestinationPlane = ({
 
   const imageRef = useRef<Mesh>(null);
 
-  const texture = useTexture(
-    destination.image
-  );
-
-  /*
-   * Store the original transform.
-   *
-   * The floating animation will animate around
-   * this position instead of accumulating movement.
-   */
-  useEffect(() => {
-    const group = groupRef.current;
-
-    if (!group) return;
-
-    group.userData.baseY = position[1];
-
-    group.userData.baseRotationX =
-      rotation[0];
-
-    group.userData.baseRotationZ =
-      rotation[2];
-  }, [position, rotation]);
+  const texture = useTexture(destination.image);
 
   useDestinationFloating({
-  groupRef,
-  index,
-  basePosition: position,
-  baseRotation: rotation,
-});
+    groupRef,
+    index,
+    basePosition: position,
+    baseRotation: rotation,
+  });
 
   return (
     <group
@@ -75,9 +53,9 @@ const DestinationPlane = ({
       rotation={rotation}
       scale={scale}
     >
-      {/* -------------------------------- */}
-      {/* Glass Card */}
-      {/* -------------------------------- */}
+      {/* ===================================================== */}
+      {/* GLASS CARD                                            */}
+      {/* ===================================================== */}
 
       <RoundedBox
         args={[3.8, 2.45, 0.08]}
@@ -97,17 +75,15 @@ const DestinationPlane = ({
         />
       </RoundedBox>
 
-      {/* -------------------------------- */}
-      {/* Destination Image */}
-      {/* -------------------------------- */}
+      {/* ===================================================== */}
+      {/* DESTINATION IMAGE                                     */}
+      {/* ===================================================== */}
 
       <mesh
         ref={imageRef}
         position={[0, 0, 0.065]}
       >
-        <planeGeometry
-          args={[3.62, 2.27]}
-        />
+        <planeGeometry args={[3.62, 2.27]} />
 
         <meshBasicMaterial
           map={texture}
@@ -115,38 +91,29 @@ const DestinationPlane = ({
         />
       </mesh>
 
-      {/* -------------------------------- */}
-      {/* Cinematic Gradient */}
-      {/* -------------------------------- */}
+      {/* ===================================================== */}
+      {/* CINEMATIC DARK GRADIENT                               */}
+      {/* ===================================================== */}
 
       <mesh
-        position={[
-          0,
-          -0.55,
-          0.075,
-        ]}
+        position={[0, -0.55, 0.075]}
       >
-        <planeGeometry
-          args={[3.62, 1.15]}
-        />
+        <planeGeometry args={[3.62, 1.15]} />
 
         <meshBasicMaterial
           color="#020617"
           transparent
           opacity={0.58}
+          depthWrite={false}
         />
       </mesh>
 
-      {/* -------------------------------- */}
-      {/* Destination Title */}
-      {/* -------------------------------- */}
+      {/* ===================================================== */}
+      {/* DESTINATION TITLE                                     */}
+      {/* ===================================================== */}
 
       <Text
-        position={[
-          -1.55,
-          -0.78,
-          0.09,
-        ]}
+        position={[-1.55, -0.78, 0.09]}
         anchorX="left"
         anchorY="middle"
         fontSize={0.22}
@@ -156,16 +123,12 @@ const DestinationPlane = ({
         {destination.title}
       </Text>
 
-      {/* -------------------------------- */}
-      {/* Country */}
-      {/* -------------------------------- */}
+      {/* ===================================================== */}
+      {/* COUNTRY                                               */}
+      {/* ===================================================== */}
 
       <Text
-        position={[
-          -1.55,
-          -1.02,
-          0.09,
-        ]}
+        position={[-1.55, -1.02, 0.09]}
         anchorX="left"
         anchorY="middle"
         fontSize={0.1}
@@ -175,16 +138,12 @@ const DestinationPlane = ({
         {destination.country.toUpperCase()}
       </Text>
 
-      {/* -------------------------------- */}
-      {/* Duration */}
-      {/* -------------------------------- */}
+      {/* ===================================================== */}
+      {/* DURATION                                              */}
+      {/* ===================================================== */}
 
       <Text
-        position={[
-          1.5,
-          -1.02,
-          0.09,
-        ]}
+        position={[1.5, -1.02, 0.09]}
         anchorX="right"
         anchorY="middle"
         fontSize={0.1}

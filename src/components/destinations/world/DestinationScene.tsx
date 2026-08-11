@@ -3,6 +3,7 @@
 import { Suspense } from "react";
 
 import { Canvas } from "@react-three/fiber";
+
 import { ACESFilmicToneMapping } from "three";
 
 import DestinationWorld from "./DestinationWorld";
@@ -11,10 +12,18 @@ interface Props {
   className?: string;
 }
 
-const DestinationScene = ({ className = "" }: Props) => {
+const DestinationScene = ({
+  className = "",
+}: Props) => {
   return (
     <div
-      className={`absolute inset-0 h-full w-full ${className}`}
+      className={`
+        absolute
+        inset-0
+        h-full
+        w-full
+        ${className}
+      `}
       aria-hidden="true"
     >
       <Canvas

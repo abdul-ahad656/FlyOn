@@ -4,29 +4,50 @@ import CameraController from "./CameraController";
 import DestinationGallery from "./DestinationGallery";
 import Environment from "./Environment";
 import Fog from "./Fog";
-import FloatingParticles from "../../destinations/world/particles/FloatingParticles";
 import Lighting from "./Lighting";
 import PostFX from "./PostFX";
 
 const DestinationWorld = () => {
   return (
     <>
+      {/* ===================================================== */}
+      {/* WORLD BACKGROUND                                      */}
+      {/* ===================================================== */}
+
       <color
         attach="background"
-        args={["#030712"]}
+        args={["#050914"]}
       />
 
+      {/* ===================================================== */}
+      {/* ATMOSPHERE                                            */}
+      {/* ===================================================== */}
+
       <Fog />
+
+      {/* ===================================================== */}
+      {/* LIGHTING                                              */}
+      {/* ===================================================== */}
 
       <Lighting />
 
       <Environment />
 
-      <FloatingParticles />
+      {/* ===================================================== */}
+      {/* CAMERA                                                */}
+      {/* ===================================================== */}
+
+      <CameraController />
+
+      {/* ===================================================== */}
+      {/* DESTINATION GALLERY                                   */}
+      {/* ===================================================== */}
 
       <DestinationGallery />
 
-      <CameraController />
+      {/* ===================================================== */}
+      {/* POST PROCESSING                                       */}
+      {/* ===================================================== */}
 
       <PostFX />
     </>
