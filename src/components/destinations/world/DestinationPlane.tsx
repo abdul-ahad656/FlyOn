@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import {
   RoundedBox,
@@ -8,7 +8,7 @@ import {
   useTexture,
 } from "@react-three/drei";
 
-import type { Mesh } from "three";
+import type { Group, Mesh } from "three";
 
 import type { DestinationCardData } from "../types";
 
@@ -33,18 +33,40 @@ const DestinationPlane = ({
   scale,
   index,
 }: Props) => {
-  const groupRef =
-    useRef<THREE.Group>(null);
+  const groupRef = useRef<Group>(null);
 
-  const imageRef =
-    useRef<Mesh>(null);
+  const imageRef = useRef<Mesh>(null);
 
-  const texture = useTexture(destination.image);
+  const texture = useTexture(
+    destination.image
+  );
+
+  /*
+   * Store the original transform.
+   *
+   * The floating animation will animate around
+   * this position instead of accumulating movement.
+   */
+  useEffect(() => {
+    const group = groupRef.current;
+
+    if (!group) return;
+
+    group.userData.baseY = position[1];
+
+    group.userData.baseRotationX =
+      rotation[0];
+
+    group.userData.baseRotationZ =
+      rotation[2];
+  }, [position, rotation]);
 
   useDestinationFloating({
-    groupRef,
-    index,
-  });
+  groupRef,
+  index,
+  basePosition: position,
+  baseRotation: rotation,
+});
 
   return (
     <group
@@ -53,7 +75,10 @@ const DestinationPlane = ({
       rotation={rotation}
       scale={scale}
     >
-      {/* Card */}
+      {/* -------------------------------- */}
+      {/* Glass Card */}
+      {/* -------------------------------- */}
+
       <RoundedBox
         args={[3.8, 2.45, 0.08]}
         radius={0.16}
@@ -72,7 +97,10 @@ const DestinationPlane = ({
         />
       </RoundedBox>
 
-      {/* Image */}
+      {/* -------------------------------- */}
+      {/* Destination Image */}
+      {/* -------------------------------- */}
+
       <mesh
         ref={imageRef}
         position={[0, 0, 0.065]}
@@ -87,9 +115,16 @@ const DestinationPlane = ({
         />
       </mesh>
 
-      {/* Dark cinematic overlay */}
+      {/* -------------------------------- */}
+      {/* Cinematic Gradient */}
+      {/* -------------------------------- */}
+
       <mesh
-        position={[0, -0.55, 0.075]}
+        position={[
+          0,
+          -0.55,
+          0.075,
+        ]}
       >
         <planeGeometry
           args={[3.62, 1.15]}
@@ -102,7 +137,10 @@ const DestinationPlane = ({
         />
       </mesh>
 
-      {/* Destination title */}
+      {/* -------------------------------- */}
+      {/* Destination Title */}
+      {/* -------------------------------- */}
+
       <Text
         position={[
           -1.55,
@@ -118,7 +156,10 @@ const DestinationPlane = ({
         {destination.title}
       </Text>
 
+      {/* -------------------------------- */}
       {/* Country */}
+      {/* -------------------------------- */}
+
       <Text
         position={[
           -1.55,
@@ -134,7 +175,10 @@ const DestinationPlane = ({
         {destination.country.toUpperCase()}
       </Text>
 
+      {/* -------------------------------- */}
       {/* Duration */}
+      {/* -------------------------------- */}
+
       <Text
         position={[
           1.5,
